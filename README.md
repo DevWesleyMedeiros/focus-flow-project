@@ -10,18 +10,30 @@ Projeto pessoal de portfólio, estruturado com o mesmo rigor de arquitetura, seg
 
 O **FocusFlow** ajuda o usuário a estruturar sessões de estudo usando a técnica Pomodoro: blocos de foco configuráveis, lista de tarefas persistente por sessão, métricas de produtividade (streaks, focus score, horas totais de foco) e um painel de analytics com histórico completo.
 
-O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, dashboard/timer view e study/task view), cada uma documentada em um arquivo de **regras de negócio** dedicado antes da implementação. 
+O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, dashboard/timer view e study/task view), cada uma documentada em um arquivo de **regras de negócio** dedicado antes da implementação.
 
 ---
 
-## 🖥️ Telas e regras de negócio
+## 🖥️ Telas e rotas (Next.js App Router)
+
+### Rotas públicas (grupo (auth))
 
 | Tela | Rota | Documento de regras de negócio |
-|---|---|---|
-| Login / Cadastro | `/login`, `/register` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
-| Dashboard — Analytics (aba *History*) | `/dashboard/analytics` | `REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md` |
-| Dashboard — Timer View (Focus Phase) | `/dashboard` | `REGRAS_DE_NEGOCIO_DASHBOARD_TIMER_VIEW.md` |
-| Study / Task View (aba *Tasks*) | `/dashboard/tasks` | `REGRAS_DE_NEGOCIO_STUDY_TASK_VIEW.md` |
+| --- | --- | --- |
+| Login | `/login` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
+| Cadastro | `/register` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
+| Esqueci minha senha | `/forgot-password` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
+| Redefinir senha | `/reset-password` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
+
+### Rotas privadas (grupo (private))
+
+| Tela | Rota | Documento de regras de negócio |
+| --- | --- | --- |
+| Dashboard — Timer View (página principal) | `/` | `REGRAS_DE_NEGOCIO_DASHBOARD_TIMER_VIEW.md` |
+| Study / Task View (aba *Tasks*) | `/tasks` | `REGRAS_DE_NEGOCIO_STUDY_TASK_VIEW.md` |
+| Dashboard — Analytics/History (aba *History*) | `/history` | `REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md` |
+| Detalhe de sessão específica | `/history/[sessionId]` | `REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md` |
+| Página de ajuda | `/ajuda` | - | |
 
 > Cada documento reúne requisitos funcionais (RF), requisitos não funcionais (RNF), regras de negócio (RN-*) e user stories (US).
 
@@ -30,6 +42,7 @@ O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, da
 ## ✨ Funcionalidades principais
 
 **Timer / Sessão de foco**
+
 - Timer configurável, com blocos entre 25 min (mínimo) e 60 min (teto)
 - Botão de incremento **+5min** por clique, ativo apenas com o timer parado/pausado
 - Iniciar / pausar / continuar sessão
@@ -38,12 +51,14 @@ O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, da
 - Indicadores derivados: **Current Flow** (Focus Score) e **Focus Rank** (faixas do Focus Score)
 
 **Tarefas de estudo**
+
 - Criação, edição, exclusão e conclusão de tarefas
 - Prioridade, drag-and-drop de ordenação e contador de sessões concluídas por tarefa
 - Quick stats: daily goal (pomodoros concluídos no dia), active session e streak
 - Filtro por nome; exclusão reflete em tempo real nas métricas semanais
 
 **Analytics / Histórico**
+
 - Daily streak, focus score e total focus hours calculados a partir das sessões armazenadas
 - Gráfico semanal, subject mix e métricas de "últimos 7 dias" fiéis aos dados persistidos
 - Sessões recentes (3 por padrão) com expansão via "View All History"
@@ -51,6 +66,7 @@ O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, da
 - Intensidade de sessão classificada em 4 faixas: *Low Focus / Moderate / High Intensity / Perfect Focus*
 
 **Autenticação e conta**
+
 - Login social via **Google (Firebase Authentication)**, sem senha local
 - Cadastro local próprio (nome, e-mail, senha, confirmar senha), com hash **bcrypt** e token de sessão encriptado
 - Política de senha: 8–15 caracteres, 1 maiúscula, 1 minúscula, 1 número, 1 caractere especial (validação com **Zod**, front e back)
@@ -59,6 +75,7 @@ O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, da
 - Logout via `POST` limpando cookies de sessão
 
 **Geral**
+
 - Menu lateral: novo bloco, nova lista de tarefas, configurações, logout
 - Suporte a instalação como **PWA** (favicon, logo, manifest.json)
 
@@ -102,8 +119,9 @@ Arquitetura em duas aplicações desacopladas (frontend e backend), comunicando-
 ## 🧰 Stack tecnológica
 
 ### Frontend
+
 | Categoria | Tecnologia |
-|---|---|
+| --- | --- |
 | Framework | Next.js (App Router) |
 | Linguagem | TypeScript |
 | UI | React + Tailwind CSS |
@@ -113,9 +131,10 @@ Arquitetura em duas aplicações desacopladas (frontend e backend), comunicando-
 | Feedback ao usuário | Sonner (toasts) |
 
 ### Backend
+
 | Categoria | Tecnologia |
-|---|---|
-| Runtime | Node.js (via Bun)|
+| --- | --- |
+| Runtime | Node.js (via Bun) |
 | Framework | Express |
 | ORM | Prisma |
 | Banco de dados | PostgreSQL |
@@ -124,16 +143,18 @@ Arquitetura em duas aplicações desacopladas (frontend e backend), comunicando-
 | Validação | Zod |
 
 ### Qualidade e testes
+
 | Categoria | Tecnologia |
-|---|---|
+| --- | --- |
 | Testes unitários / integração | Vitest, Supertest |
 | Testes E2E | Playwright |
 | Mock de rede | MSW |
 | Metodologia | TDD onde aplicável |
 
 ### Infraestrutura (proposta, alinhada ao projeto anterior "casa-do-hamburguer")
+
 | Camada | Serviço |
-|---|---|
+| --- | --- |
 | Frontend | Vercel |
 | Backend | Railway |
 | Banco de dados | Neon (PostgreSQL) |
@@ -199,16 +220,59 @@ bun dev
 # 3. Frontend (em outro terminal)
 cd client
 bun install
-cp .env.local.example .env.local   # preencher NEXT_PUBLIC_API_URL, FIREBASE_*
+cp .env.example .env.local   # preencher NEXT_PUBLIC_API_URL, FIREBASE_*
 bun dev
 ```
+
+---
+
+## 📁 Estrutura do monorepo implementada
+
+```
+focus-flow-project/
+├── docs/
+│   ├── architecture/    # Docs de regras de negócio (REGRAS_DE_NEGOCIO_*.md)
+│   └── design/          # Docs de design UI/UX
+├── client/              # Frontend Next.js 15 (App Router)
+│   ├── src/
+│   │   ├── app/         # Rotas com route groups: (auth), (private)
+│   │   ├── components/  # Components separados por domínio (auth, timer, tasks...)
+│   │   ├── hooks/       # Custom hooks (useAuth, useFocusTimer, useTasks...)
+│   │   ├── lib/         # Firebase client + API services
+│   │   ├── schemas/     # Validações Zod
+│   │   ├── stores/      # Estado global Zustand
+│   │   ├── types/       # Tipos TypeScript compartilhados
+│   │   └── styles/      # Estilos globais (Tailwind)
+│   ├── e2e/             # Testes Playwright
+│   └── tests/           # Testes unitários Vitest
+└── server/              # Backend Node.js + Express
+    ├── src/
+    │   ├── config/      # Firebase Admin, DB
+    │   ├── controllers/ # Lógica das rotas
+    │   ├── services/    # Regras de negócio
+    │   ├── repositories/# Acesso a dados
+    │   ├── middlewares/ # Auth, validações
+    │   ├── routes/      # Definição de rotas API
+    │   ├── app.ts       # Configuração Express
+    │   └── index.ts     # Entrypoint do servidor
+    ├── prisma/          # Schema Prisma ORM
+    └── tests/           # Testes unitários Vitest
+```
+
+## 📌 Resolução de divergências entre README inicial e docs de regras
+
+Foram resolvidas 3 divergências identificadas durante a criação do scaffolding, registradas neste PR:
+
+1. **Divergência de rotas**: O README inicial mencionava rotas `/dashboard/*`, mas os docs de regras de negócio usavam Next.js App Router com route groups `(auth)` e `(private)`, onde as rotas privadas são diretas na raiz (`/`, `/tasks`, `/history`). Resolução: Atualizou-se o README para refletir a estrutura real implementada, alinhando aos docs de RN.
+2. **Organização de components**: O README inicial sugeria uma pasta `components/shared/` genérica, mas os RN indicavam separação por domínio de negócio. Resolução: Implementada estrutura `components/{auth,timer,tasks,analytics,profile,notifications,shared}/`, alinhada ao domínio.
+3. **Arquivo de design**: O README inicial mencionava `Pomodoro-Project-Design.md` com maiúsculas e hifens no nome, enquanto os docs exigiam o nome em minúsculas. Resolução: Criado arquivo `docs/design/pomodoro-project-design.md` seguindo a nomenclatura dos demais arquivos de documentação.
 
 ---
 
 ## 🗺️ Roadmap / Status
 
 | Módulo | Status |
-|---|---|
+| --- | --- |
 | Regras de negócio das 4 telas principais | 🟢 Documentadas |
 | Scaffolding do repositório (client/server) | 🟡 Em andamento |
 | Autenticação híbrida (Google + local) | ⚪ Planejado |
