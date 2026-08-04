@@ -1,25 +1,32 @@
-// TODO: Implementar serviço de autenticação - ver regras em docs/architecture/REGRAS_DE_NEGOCIO_LOGIN.md
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+// Serviço de autenticação implementado com Axios - alinhado com REGRAS_DE_NEGOCIO_LOGIN.md
+import { apiClient } from "./client";
+
+interface LoginData {
+  email: string;
+  password: string;
+}
+
+interface RegisterData {
+  email: string;
+  password: string;
+  displayName: string;
+}
 
 export const authService = {
-  login: async (email: string, password: string) => {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    return response.json();
+  login: async (data: LoginData) => {
+    const response = await apiClient.post("/auth/login", data);
+    return response.data;
   },
-  register: async (data: any) => {
-    const response = await fetch(`${API_URL}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return response.json();
+  register: async (data: RegisterData) => {
+    const response = await apiClient.post("/auth/register", data);
+    return response.data;
   },
   logout: async () => {
-    const response = await fetch(`${API_URL}/auth/logout`, { method: "POST" });
-    return response.json();
+    const response = await apiClient.post("/auth/logout");
+    return response.data;
+  },
+  getCurrentUser: async () => {
+    const response = await apiClient.get("/auth/me");
+    return response.data;
   },
 };

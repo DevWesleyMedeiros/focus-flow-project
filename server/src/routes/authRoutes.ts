@@ -5,12 +5,14 @@ import { logoutController } from "../controllers/auth/logoutController";
 import { registerController } from "../controllers/auth/registerController";
 import { resetPasswordController } from "../controllers/auth/resetPasswordController";
 import { authMiddleware } from "../middlewares/authMiddleware";
+import { authRateLimiter } from "../middlewares/rateLimiter";
 
 const authRouter = Router();
 
-authRouter.post("/login", loginController);
-authRouter.post("/register", registerController);
+// Aplica rate limit em todas as rotas públicas de auth
+authRouter.post("/login", authRateLimiter, loginController);
+authRouter.post("/register", authRateLimiter, registerController);
 authRouter.post("/logout", authMiddleware, logoutController);
-authRouter.post("/reset-password", resetPasswordController);
+authRouter.post("/reset-password", authRateLimiter, resetPasswordController);
 
 export { authRouter };
