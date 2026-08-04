@@ -1,5 +1,5 @@
 // TODO: Inicializar cliente Firebase - configurar credenciais do .env
-import { initializeApp } from "firebase/app";
+import { getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -11,6 +11,17 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+let app;
+let auth;
+
+// Inicializa apenas se as credenciais existirem e não houver app já inicializado
+if (firebaseConfig.apiKey && getApps().length === 0) {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+} else if (getApps().length > 0) {
+  app = getApps()[0];
+  auth = getAuth(app);
+}
+
+export { app, auth };
 export default app;

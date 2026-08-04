@@ -1,17 +1,13 @@
 // TODO: Implementar serviço de categorias de tarefas
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { apiClient } from "./client";
 
 export const categoriesService = {
   getCategories: async () => {
-    const response = await fetch(`${API_URL}/categories`);
-    return response.json();
+    const response = await apiClient.get("/categories");
+    return response.data;
   },
   createCategory: async (data: any) => {
-    const response = await fetch(`${API_URL}/categories`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return response.json();
+    const response = await apiClient.post("/categories", data);
+    return response.data;
   },
 };

@@ -1,39 +1,25 @@
 // TODO: Implementar serviço de tarefas - ver regras em docs/architecture/REGRAS_DE_NEGOCIO_STUDY_TASK_VIEW.md
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { apiClient } from "./client";
 
 export const tasksService = {
   getTasks: async () => {
-    const response = await fetch(`${API_URL}/tasks`);
-    return response.json();
+    const response = await apiClient.get("/tasks");
+    return response.data;
   },
   createTask: async (data: any) => {
-    const response = await fetch(`${API_URL}/tasks`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return response.json();
+    const response = await apiClient.post("/tasks", data);
+    return response.data;
   },
   updateTask: async (taskId: string, data: any) => {
-    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    return response.json();
+    const response = await apiClient.put(`/tasks/${taskId}`, data);
+    return response.data;
   },
   deleteTask: async (taskId: string) => {
-    const response = await fetch(`${API_URL}/tasks/${taskId}`, {
-      method: "DELETE",
-    });
-    return response.json();
+    const response = await apiClient.delete(`/tasks/${taskId}`);
+    return response.data;
   },
   reorderTasks: async (order: string[]) => {
-    const response = await fetch(`${API_URL}/tasks/reorder`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ order }),
-    });
-    return response.json();
+    const response = await apiClient.post("/tasks/reorder", { order });
+    return response.data;
   },
 };
