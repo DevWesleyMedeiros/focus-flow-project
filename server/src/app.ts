@@ -1,4 +1,5 @@
 // TODO: Arquivo principal do Express app - configurar middlewares, rotas, CORS
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -8,7 +9,13 @@ const app = express();
 
 // Middlewares globais
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN || "http://localhost:3000" }));
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // Rotas
