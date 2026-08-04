@@ -15,12 +15,25 @@ model User {
   email             String            @unique
   displayName       String
   avatarUrl         String?
-  dailyGoal        Int               @default(8) // 8 pomodoros por dia
+  dailyGoal         Int               @default(8) // 8 pomodoros por dia
   passwordResetTokens PasswordResetToken[]
   focusSessions     FocusSession[]
   tasks             Task[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+
+  @@index([createdAt])
+}
+
+model PasswordResetToken {
+  id                String            @id @default(uuid())
+  userId            String
+  token             String            @unique
+  expiresAt         DateTime
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime          @default(now())
+
+  @@index([userId, expiresAt])
 }
 
 model PasswordResetToken {
@@ -44,6 +57,8 @@ model FocusSession {
   task              Task?             @relation(fields: [taskId], references: [id], onDelete: SetNull)
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+
+  @@index([userId, startTime, completed])
 }
 
 model Task {
@@ -60,6 +75,9 @@ model Task {
   focusSessions     FocusSession[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+
+  @@index([userId, order, completed])
+  @@index([categoryId])
 }
 
 model Category {
@@ -71,4 +89,6 @@ model Category {
   tasks             Task[]
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
+
+  @@index([userId])
 }
