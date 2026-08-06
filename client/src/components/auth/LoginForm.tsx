@@ -70,7 +70,7 @@ export function LoginForm() {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting} className="mt-4 w-full">
+      <Button type="submit" disabled={isSubmitting} variant="primary">
         {isSubmitting ? "Entrando..." : "Entrar"}
       </Button>
     </form>

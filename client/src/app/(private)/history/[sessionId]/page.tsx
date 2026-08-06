@@ -5,6 +5,6 @@ type Props = {
   };
 };
 
-export default function SessionDetailPage({ params }: Props) {
+export default function SessionDetailPage({ params }: Readonly<Props>) {
   return <div>Session Detail Page: {params.sessionId}</div>;
 }

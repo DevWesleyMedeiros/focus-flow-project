@@ -1,6 +1,6 @@
 // TODO: Inicializar cliente Firebase - configurar credenciais do .env
 import { getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -9,19 +9,21 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measumentId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENTID,
 };
 
-let app;
-let auth;
-
 // Inicializa apenas se as credenciais existirem e não houver app já inicializado
-if (firebaseConfig.apiKey && getApps().length === 0) {
-  app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-} else if (getApps().length > 0) {
-  app = getApps()[0];
-  auth = getAuth(app);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+
+let analytics;
+if (typeof window !== "undefined") {
+  try {
+    analytics = getAnalytics(app);
+  } catch (err) {
+    // ignorar em ambientes onde analytics não está disponível (SSR)
+    console.warn("Firebase analytics não inicializado (SSR ou indisponível).");
+  }
 }
 
-export { app, auth };
+export { app };
 export default app;

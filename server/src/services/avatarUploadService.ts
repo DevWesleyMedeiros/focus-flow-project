@@ -1,18 +1,18 @@
 // TODO: Serviço de upload de avatar - configurar credenciais Cloudinary
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 
 // Inicializa Cloudinary apenas se as credenciais existirem
 if (
-  process.env.CLOUDINARY_CLOUD_NAME &&
-  process.env.CLOUDINARY_API_KEY &&
-  process.env.CLOUDINARY_API_SECRET
+  process.env["CLOUDINARY_CLOUD_NAME"] &&
+  process.env["CLOUDINARY_API_KEY"] &&
+  process.env["CLOUDINARY_API_SECRET"]
 ) {
   cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env["CLOUDINARY_CLOUD_NAME"],
+    api_key: process.env["CLOUDINARY_API_KEY"],
+    api_secret: process.env["CLOUDINARY_API_SECRET"],
   });
 }
 
@@ -21,9 +21,13 @@ const storage = multer.memoryStorage();
 export const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    if (allowedTypes.includes(file.mimetype)) {
+  fileFilter: (_req, file, cb) => {
+    const allowedTypes = new Set<string>([
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+    ]);
+    if (allowedTypes.has(file.mimetype)) {
       cb(null, true);
     } else {
       cb(new Error("Tipo de arquivo não suportado. Use JPG, PNG ou WebP."));
@@ -36,7 +40,7 @@ export const uploadAvatar = async (
   buffer: Buffer,
   userId: string,
 ): Promise<string | null> => {
-  if (!process.env.CLOUDINARY_CLOUD_NAME) {
+  if (!process.env["CLOUDINARY_CLOUD_NAME"]) {
     console.warn("Cloudinary não configurado - upload de avatar desativado");
     return null;
   }
