@@ -3,11 +3,16 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // Lógica de verificação de autenticação a ser implementada
+  const pathname = request.nextUrl.pathname;
   const isAuthenticated = false; // placeholder
+  const isPrivatePath =
+    pathname === "/" ||
+    pathname.startsWith("/tasks") ||
+    pathname.startsWith("/history") ||
+    pathname.startsWith("/ajuda") ||
+    pathname.startsWith("/profile");
 
-  if (!isAuthenticated && request.nextUrl.pathname.startsWith("/")) {
-    // Redireciona para login se não estiver autenticado
+  if (!isAuthenticated && isPrivatePath) {
     const loginUrl = new URL("/login", request.url);
     return NextResponse.redirect(loginUrl);
   }

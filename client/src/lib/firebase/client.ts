@@ -14,7 +14,16 @@ const firebaseConfig = {
 
 // Inicializa apenas se as credenciais existirem e não houver app já inicializado
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-const analytics = getAnalytics(app);
+
+let analytics;
+if (typeof window !== "undefined") {
+  try {
+    analytics = getAnalytics(app);
+  } catch (err) {
+    // ignorar em ambientes onde analytics não está disponível (SSR)
+    console.warn("Firebase analytics não inicializado (SSR ou indisponível).");
+  }
+}
 
 export { app };
 export default app;

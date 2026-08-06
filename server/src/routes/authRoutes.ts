@@ -17,24 +17,50 @@ authRouter.post("/logout", authMiddleware, logoutController);
 authRouter.post("/reset-password", authRateLimiter, resetPasswordController);
 
 // mostra o padrão recomendado pelo próprio Firebase sessão de cookies com Firebase
-authRouter.post("/auth/session", async (req, res) => {
+authRouter.post("/auth/firebase_session", async (req, res) => {
   const { idToken, csrfToken } = req.body;
 
-  if (csrfToken !== req.cookies.csrfToken) {
+  // Expectativa: cliente envia um csrfToken obtido previamente (double-submit)
+  const existingCsrf = req.cookies?.csrfToken;
+  if (
+    !existingCsrf ||
+    typeof csrfToken !== "string" ||
+    csrfToken !== existingCsrf
+  ) {
     return res.status(401).send("UNAUTHORIZED REQUEST!");
   }
 
   try {
+    // Cria a session cookie via Firebase Admin
     const { sessionCookie, maxAge } = await createFirebaseSession(idToken);
-    res.cookie("session", sessionCookie, {
+
+    // Flag secure condicionada ao ambiente (evita falha em dev sem HTTPS) (ver se irá funcionar em desenvolvimento)
+    const secureFlag = process.env["NODE_ENN"] === "production";
+
+    // Use nomes específicos para evitar colisão com outros cookies (isolamento)
+    res.cookie("firebase_session", sessionCookie, {
       maxAge,
       httpOnly: true,
-      secure: true, // RN-AUTH-11
-      sameSite: "lax", // ajustar conforme domínio real (RN-AUTH-11)
+      secure: secureFlag,
+      sameSite: "lax",
+      path: "/",
     });
-    return res.json({ status: "success" });
-  } catch {
-    res.status(401).send("UNAUTHORIZED REQUEST!");
+
+    // Gera um novo CSRF token (double-submit pattern). Este cookie NÃO é httpOnly
+    // para que o cliente facilite envio do token no corpo das requisições subsequentes.
+    const newCsrf = require("node:crypto").randomBytes(32).toString("hex");
+    res.cookie("csrfToken", newCsrf, {
+      maxAge,
+      httpOnly: false,
+      secure: secureFlag,
+      sameSite: "lax",
+      path: "/",
+    });
+
+    return res.json({ status: "success", csrfToken: newCsrf });
+  } catch (err) {
+    console.error("Erro ao criar session cookie Firebase:", err);
+    return res.status(401).send("UNAUTHORIZED REQUEST!");
   }
 });
 
