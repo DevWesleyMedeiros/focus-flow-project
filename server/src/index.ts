@@ -1,13 +1,10 @@
-// TODO: Arquivo de entrada do servidor - iniciar o Express na porta definida
-import { PrismaClient } from "@prisma/client";
 import { app } from "./app";
+import { connection, prisma } from "./db";
 
-const prisma = new PrismaClient();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env["NEXTAUTH_URL"] || 3000;
 
 async function main() {
-  // Testar conexão com o banco
-  await prisma.$connect();
+  await connection();
   console.log("✅ Conectado ao PostgreSQL via Prisma");
 
   app.listen(PORT, () => {

@@ -1,4 +1,4 @@
-// TODO: Implementar middleware de proteção de rotas privadas - verificar autenticação Firebase
+// TO DO: Implementar middleware de proteção de rotas privadas - verificar autenticação Firebase
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
