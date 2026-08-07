@@ -4,25 +4,51 @@ import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 
 const rawServiceAccount = process.env["FIREBASE_SERVICE_ACCOUNT_KEY"];
-if (!rawServiceAccount) {
-  throw new Error(
-    "FIREBASE_SERVICE_ACCOUNT_KEY não definido. Configure a variável de ambiente com o JSON do service account.",
-  );
-}
 
-let serviceAccount: Record<string, unknown>;
-try {
-  serviceAccount = JSON.parse(rawServiceAccount) as Record<string, unknown>;
-} catch (err) {
-  throw new Error("FIREBASE_SERVICE_ACCOUNT_KEY inválido: JSON malformado.");
-}
+const adminAuth = (() => {
+  if (rawServiceAccount) {
+    let serviceAccount: Record<string, unknown>;
+    try {
+      serviceAccount = JSON.parse(rawServiceAccount) as Record<string, unknown>;
+    } catch (err) {
+      throw new Error(
+        "FIREBASE_SERVICE_ACCOUNT_KEY inválido: JSON malformado.",
+      );
+    }
 
-if (!getApps().length) {
-  initializeApp({
-    credential: cert(serviceAccount),
-  });
-}
+    if (!getApps().length) {
+      initializeApp({
+        credential: cert(serviceAccount),
+      });
+    }
 
-export const adminAuth = getAuth();
-export const adminDb = getFirestore();
-export { getApps };
+    return getAuth();
+  }
+
+  if (getApps().length) {
+    return getAuth();
+  }
+
+  return {
+    verifyIdToken: async () => {
+      throw new Error("Firebase Admin not initialized");
+    },
+    verifySessionCookie: async () => {
+      throw new Error("Firebase Admin not initialized");
+    },
+  } as unknown as ReturnType<typeof getAuth>;
+})();
+
+const adminDb = (() => {
+  if (rawServiceAccount) {
+    return getFirestore();
+  }
+
+  if (getApps().length) {
+    return getFirestore();
+  }
+
+  return undefined;
+})();
+
+export { adminAuth, adminDb, getApps };

@@ -1,4 +1,4 @@
-// TO  DO: Implementar formulário de cadastro - ver regras em docs/architecture/REGRAS_DE_NEGOCIO_LOGIN.md
+// TODO: Implementar formulário de cadastro - ver regras em docs/architecture/REGRAS_DE_NEGOCIO_LOGIN.md
 "use client";
 
 export function RegisterForm() {

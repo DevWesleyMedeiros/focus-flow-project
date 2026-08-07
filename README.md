@@ -1,303 +1,219 @@
 # 🎯 FocusFlow — Pomodoro Study Timer
 
-> Aplicação web fullstack de timer Pomodoro para controle de tempo de estudo, com autenticação híbrida (Google + local), analytics de produtividade e suporte a PWA.
+> Aplicação web fullstack para organização de estudo com timer Pomodoro, autenticação híbrida, gestão de tarefas e dashboard de produtividade. O projeto está em evolução, com foco em portfólio, arquitetura limpa e boas práticas de desenvolvimento.
 
-Projeto pessoal de portfólio, estruturado com o mesmo rigor de arquitetura, segurança e boas práticas servindo como segunda peça do boilerplate pessoal do autor para sistemas fullstack modernos.
-
----
-
-## 📌 Sobre o projeto
-
-O **FocusFlow** ajuda o usuário a estruturar sessões de estudo usando a técnica Pomodoro: blocos de foco configuráveis, lista de tarefas persistente por sessão, métricas de produtividade (streaks, focus score, horas totais de foco) e um painel de analytics com histórico completo.
-
-O projeto nasceu de telas desenhadas previamente (login, dashboard/analytics, dashboard/timer view e study/task view), cada uma documentada em um arquivo de **regras de negócio** dedicado antes da implementação.
+O FocusFlow nasceu para unir foco, acompanhamento e análise de desempenho em uma experiência simples e visualmente objetiva. Ao longo do desenvolvimento, a aplicação passou a contar com fluxos de autenticação, timer de sessão, tarefas de estudo, histórico de sessões e uma estrutura monorepo organizada para frontend e backend.
 
 ---
 
-## 🖥️ Telas e rotas (Next.js App Router)
+## 📌 Visão geral do projeto
 
-### Rotas públicas (grupo (auth))
+O projeto tem como objetivo ajudar o usuário a:
 
-| Tela | Rota | Documento de regras de negócio |
-| --- | --- | --- |
-| Login | `/login` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
-| Cadastro | `/register` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
-| Esqueci minha senha | `/forgot-password` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
-| Redefinir senha | `/reset-password` | `REGRAS_DE_NEGOCIO_LOGIN.md` |
+- estruturar sessões de estudo com a técnica Pomodoro;
+- acompanhar a produtividade por meio de métricas e histórico;
+- organizar tarefas em uma interface clara e responsiva;
+- manter uma base sólida de arquitetura para evolução futura.
 
-### Rotas privadas (grupo (private))
-
-| Tela | Rota | Documento de regras de negócio |
-| --- | --- | --- |
-| Dashboard — Timer View (página principal) | `/` | `REGRAS_DE_NEGOCIO_DASHBOARD_TIMER_VIEW.md` |
-| Study / Task View (aba *Tasks*) | `/tasks` | `REGRAS_DE_NEGOCIO_STUDY_TASK_VIEW.md` |
-| Dashboard — Analytics/History (aba *History*) | `/history` | `REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md` |
-| Detalhe de sessão específica | `/history/[sessionId]` | `REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md` |
-| Página de ajuda | `/ajuda` | - | |
-
-> Cada documento reúne requisitos funcionais (RF), requisitos não funcionais (RNF), regras de negócio (RN-*) e user stories (US).
+A documentação de regras de negócio para as telas principais está organizada em [docs/architecture](docs/architecture), e o repositório já acompanha uma estrutura modular para frontend, backend e testes.
 
 ---
 
-## ✨ Funcionalidades principais
+## 🖥️ Screenshots do estado atual
 
-**Timer / Sessão de foco**
+Abaixo estão algumas capturas já registradas da interface atual do projeto:
 
-- Timer configurável, com blocos entre 25 min (mínimo) e 60 min (teto)
-- Botão de incremento **+5min** por clique, ativo apenas com o timer parado/pausado
-- Iniciar / pausar / continuar sessão
-- Shader animation ao redor do cronômetro, proporcional à duração da sessão
-- Alarme + notificação ao final da sessão, com resumo das tasks concluídas
-- Indicadores derivados: **Current Flow** (Focus Score) e **Focus Rank** (faixas do Focus Score)
-
-**Tarefas de estudo**
-
-- Criação, edição, exclusão e conclusão de tarefas
-- Prioridade, drag-and-drop de ordenação e contador de sessões concluídas por tarefa
-- Quick stats: daily goal (pomodoros concluídos no dia), active session e streak
-- Filtro por nome; exclusão reflete em tempo real nas métricas semanais
-
-**Analytics / Histórico**
-
-- Daily streak, focus score e total focus hours calculados a partir das sessões armazenadas
-- Gráfico semanal, subject mix e métricas de "últimos 7 dias" fiéis aos dados persistidos
-- Sessões recentes (3 por padrão) com expansão via "View All History"
-- Exportação de métricas do dia em `.csv`
-- Intensidade de sessão classificada em 4 faixas: *Low Focus / Moderate / High Intensity / Perfect Focus*
-
-**Autenticação e conta**
-
-- Login social via **Google (Firebase Authentication)**, sem senha local
-- Cadastro local próprio (nome, e-mail, senha, confirmar senha), com hash **bcrypt** e token de sessão encriptado
-- Política de senha: 8–15 caracteres, 1 maiúscula, 1 minúscula, 1 número, 1 caractere especial (validação com **Zod**, front e back)
-- Recuperação de senha: `sendPasswordResetEmail` (Firebase) para contas Google; fluxo próprio para contas locais
-- Avatar do usuário armazenado em banco (mime, size) e servido via Cloudinary
-- Logout via `POST` limpando cookies de sessão
-
-**Geral**
-
-- Menu lateral: novo bloco, nova lista de tarefas, configurações, logout
-- Suporte a instalação como **PWA** (favicon, logo, manifest.json)
+1. Tela de login
+![Tela de login](client/public/screenshots/pomodoro_login-screen.png)
+2. Tela de cadastro
+![Tela de cadastro](client/public/screenshots/pomodoro_register-screen.png)
+3. Tela de recuperação de senha
+![Tela de recuperação de senha](client/public/screenshots/pomodoro_forgot-password-screen.png)
 
 ---
 
-## 🏗️ Arquitetura
+## ✨ Funcionalidades já implementadas ou em andamento
 
-Arquitetura em duas aplicações desacopladas (frontend e backend), comunicando-se via API REST, adaptada ao Next.js no front:
+### Autenticação e conta
 
-```
-                ┌────────────────────────┐
-                │        Cliente          │
-                │  Next.js (App Router)   │
-                │  React + TypeScript     │
-                │  Tailwind CSS           │
-                └───────────┬─────────────┘
-                            │ REST (Axios/Fetch)
-                            ▼
-                ┌────────────────────────┐
-                │        Backend           │
-                │  Node.js + Express       │
-                │  Routes → Controllers →  │
-                │  Services → Repositories │
-                │  Prisma ORM              │
-                └───────────┬─────────────┘
-                            ▼
-                ┌────────────────────────┐
-                │      PostgreSQL          │
-                └────────────────────────┘
+- fluxo de login, cadastro, recuperação e redefinição de senha;
+- validação de formulários com Zod e React Hook Form;
+- autenticação local com hash e sessão, além de integração com Firebase Authentication para login Google;
+- estrutura preparada para upload e gestão de avatar com Cloudinary.
 
-  Auxiliares: Firebase Authentication (login Google) · Cloudinary (avatares)
-```
+### Timer Pomodoro
 
-- **Padrão MVC adaptado** no backend (routes / controllers / services / repositories), numa arquitetura monolítica
-- **Autenticação híbrida**: JWT/sessão encriptada (contas locais) convivendo com Firebase Auth (contas Google)
-- **Separação app/server**: `app.ts` (configuração Express) desacoplado de `index.ts` (porta/listen), visando testabilidade
-- **Snapshot/consistência de dados**: sessões e tasks concluídas persistidas de forma que métricas (streak, focus score, subject mix) sejam sempre recalculáveis a partir do histórico bruto, nunca de contadores soltos
+- timer de foco com controle de início, pausa e continuação;
+- ação de incremento de tempo (+5 minutos) quando o cronômetro está parado ou pausado;
+- feedback visual e alertas ao fim da sessão;
+- base para métricas de produtividade vinculadas ao histórico de sessões.
+
+### Tarefas de estudo
+
+- criação, edição, conclusão e organização de tarefas;
+- prioridade e ordenação visual;
+- integração com as métricas de sessão e daily goal.
+
+### Analytics e histórico
+
+- histórico de sessões e métricas de foco;
+- indicadores como streak, focus score e horas de foco;
+- painel com base para análise semanal e evolução do comportamento do usuário.
+
+### Experiência de uso
+
+- rotas públicas e privadas organizadas com Next.js App Router;
+- navegação com layout mais próximo de uma aplicação real;
+- componente de notificações e feedback de usuário com toasts.
 
 ---
 
 ## 🧰 Stack tecnológica
 
-### Frontend
+### Frontend (client)
 
-| Categoria | Tecnologia |
-| --- | --- |
-| Framework | Next.js (App Router) |
-| Linguagem | TypeScript |
-| UI | React + Tailwind CSS |
-| Estado / dados | Zustand (estado local) + TanStack Query (estado de servidor) |
-| Formulários | React Hook Form + Zod |
-| HTTP client | Axios |
-| Feedback ao usuário | Sonner (toasts) |
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+- Zustand para estado local
+- React Hook Form + Zod
+- Axios
+- Sonner para feedback visual
 
-### Backend
+### Backend (server)
 
-| Categoria | Tecnologia |
-| --- | --- |
-| Runtime | Node.js (via Bun) |
-| Framework | Express |
-| ORM | Prisma |
-| Banco de dados | PostgreSQL |
-| Autenticação | Firebase Authentication (Google) + JWT/sessão local (bcrypt) |
-| Armazenamento de mídia | Cloudinary |
-| Validação | Zod |
+- Node.js + Express
+- Bun como runtime de desenvolvimento
+- Prisma ORM
+- PostgreSQL
+- Firebase Authentication
+- Cloudinary para mídia
+- Zod para validação
 
 ### Qualidade e testes
 
-| Categoria | Tecnologia |
-| --- | --- |
-| Testes unitários / integração | Vitest, Supertest |
-| Testes E2E | Playwright |
-| Mock de rede | MSW |
-| Metodologia | TDD onde aplicável |
-
-### Infraestrutura (proposta, alinhada ao projeto anterior "casa-do-hamburguer")
-
-| Camada | Serviço |
-| --- | --- |
-| Frontend | Vercel |
-| Backend | Railway |
-| Banco de dados | Neon (PostgreSQL) |
-| Versionamento | GitHub (fluxo `feature/*` → `develop` → `main`, com proteção de branch) |
+- Vitest
+- Supertest
+- Playwright
+- MSW
 
 ---
 
-## 📁 Estrutura de pastas (proposta)
+## 🏗️ Arquitetura atual
 
+O projeto segue uma arquitetura monolítica modular, separada em duas camadas principais:
+
+```text
+client/  → interface web com Next.js, rotas, componentes, hooks e stores
+server/  → API REST com Express, controllers, services, middlewares e Prisma
 ```
+
+Principais pontos da estrutura atual:
+
+- frontend e backend desacoplados, com comunicação via API REST;
+- organização por domínio no frontend, com pastas como auth, timer, tasks, analytics e shared;
+- backend com camada de serviços para regras de negócio e Prisma para persistência;
+- foco em escalabilidade e testabilidade para evolução futura.
+
+---
+
+## 📁 Estrutura do repositório
+
+```text
 focus-flow-project/
-├── client/                    # Next.js (App Router)
+├── client/
+│   ├── public/
+│   │   └── screenshots/
 │   ├── src/
-│   │   ├── app/                # rotas (login, register, dashboard, tasks...)
+│   │   ├── app/
 │   │   ├── components/
-│   │   ├── features/            # timer, tasks, analytics, auth
-│   │   ├── shared/               # api (axios), hooks, utils, types
-│   │   └── styles/
-│   └── public/                  # favicon, manifest.json, ícones PWA
-├── server/                    # Node.js + Express
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── services/
-│   │   ├── repositories/
-│   │   ├── middlewares/
-│   │   ├── prisma/               # schema.prisma, migrations
-│   │   ├── app.ts
-│   │   └── index.ts
-│   └── prisma/
+│   │   ├── hooks/
+│   │   ├── lib/
+│   │   ├── schemas/
+│   │   ├── stores/
+│   │   └── types/
+│   └── tests/
 ├── docs/
 │   ├── architecture/
-│   │   ├── REGRAS_DE_NEGOCIO_LOGIN.md
-│   │   ├── REGRAS_DE_NEGOCIO_DASHBOARD_ANALYTICS.md
-│   │   ├── REGRAS_DE_NEGOCIO_DASHBOARD_TIMER_VIEW.md
-│   │   └── REGRAS_DE_NEGOCIO_STUDY_TASK_VIEW.md
 │   └── design/
-│       └── pomodoro-project-design.md
-├── .gitignore
-├── .editorconfig
-├── README.md
-└── LICENSE
+├── server/
+│   ├── prisma/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   └── app.ts
+│   └── tests/
+└── README.md
 ```
-
-> Estrutura de monorepo simples (`client/` + `server/`), sem workspaces complexos — compatível com deploy separado (Vercel + Railway).
 
 ---
 
 ## 🚀 Como rodar localmente
 
-```bash
-# 1. Clonar o repositório
-git clone https://github.com/[GITHUB_USERNAME]/focus-flow-project.git
-cd focus-flow-project
+### Backend
 
-# 2. Backend
+```bash
 cd server
 bun install
-cp .env.example .env   # preencher DATABASE_URL, FIREBASE_*, CLOUDINARY_*, JWT_SECRET
-bunx --bun prisma migrate dev
 bun dev
+```
 
-# 3. Frontend (em outro terminal)
+### Frontend
+
+```bash
 cd client
 bun install
-cp .env.example .env.local   # preencher NEXT_PUBLIC_API_URL, FIREBASE_*
 bun dev
 ```
 
----
-
-## 📁 Estrutura do monorepo implementada
-
-```
-focus-flow-project/
-├── docs/
-│   ├── architecture/    # Docs de regras de negócio (REGRAS_DE_NEGOCIO_*.md)
-│   └── design/          # Docs de design UI/UX
-├── client/              # Frontend Next.js 15 (App Router)
-│   ├── src/
-│   │   ├── app/         # Rotas com route groups: (auth), (private)
-│   │   ├── components/  # Components separados por domínio (auth, timer, tasks...)
-│   │   ├── hooks/       # Custom hooks (useAuth, useFocusTimer, useTasks...)
-│   │   ├── lib/         # Firebase client + API services
-│   │   ├── schemas/     # Validações Zod
-│   │   ├── stores/      # Estado global Zustand
-│   │   ├── types/       # Tipos TypeScript compartilhados
-│   │   └── styles/      # Estilos globais (Tailwind)
-│   ├── e2e/             # Testes Playwright
-│   └── tests/           # Testes unitários Vitest
-└── server/              # Backend Node.js + Express
-    ├── src/
-    │   ├── config/      # Firebase Admin, DB
-    │   ├── controllers/ # Lógica das rotas
-    │   ├── services/    # Regras de negócio
-    │   ├── repositories/# Acesso a dados
-    │   ├── middlewares/ # Auth, validações
-    │   ├── routes/      # Definição de rotas API
-    │   ├── app.ts       # Configuração Express
-    │   └── index.ts     # Entrypoint do servidor
-    ├── prisma/          # Schema Prisma ORM
-    └── tests/           # Testes unitários Vitest
-```
-
-## 📌 Resolução de divergências entre README inicial e docs de regras
-
-Foram resolvidas 3 divergências identificadas durante a criação do scaffolding, registradas neste PR:
-
-1. **Divergência de rotas**: O README inicial mencionava rotas `/dashboard/*`, mas os docs de regras de negócio usavam Next.js App Router com route groups `(auth)` e `(private)`, onde as rotas privadas são diretas na raiz (`/`, `/tasks`, `/history`). Resolução: Atualizou-se o README para refletir a estrutura real implementada, alinhando aos docs de RN.
-2. **Organização de components**: O README inicial sugeria uma pasta `components/shared/` genérica, mas os RN indicavam separação por domínio de negócio. Resolução: Implementada estrutura `components/{auth,timer,tasks,analytics,profile,notifications,shared}/`, alinhada ao domínio.
-3. **Arquivo de design**: O README inicial mencionava `Pomodoro-Project-Design.md` com maiúsculas e hifens no nome, enquanto os docs exigiam o nome em minúsculas. Resolução: Criado arquivo `docs/design/pomodoro-project-design.md` seguindo a nomenclatura dos demais arquivos de documentação.
+> Em ambientes locais, é necessário configurar as variáveis de ambiente do backend e do frontend conforme as integrações com Firebase, Prisma e Cloudinary.
 
 ---
 
-## 🗺️ Roadmap / Status
+## 🧪 Testes
 
-| Módulo | Status |
-| --- | --- |
-| Regras de negócio das 4 telas principais | 🟢 Documentadas |
-| Scaffolding do repositório (client/server) | 🟡 Em andamento |
-| Autenticação híbrida (Google + local) | ⚪ Planejado |
-| Timer / sessão de foco | ⚪ Planejado |
-| Tasks de estudo | ⚪ Planejado |
-| Dashboard / Analytics | ⚪ Planejado |
-| PWA | ⚪ Planejado |
-| Testes automatizados | ⚪ Planejado |
+Os projetos já contam com estrutura inicial para testes:
 
-Legenda: 🟢 concluído · 🟡 em andamento · ⚪ planejado
+```bash
+cd client
+bun test
+```
+
+```bash
+cd server
+bun test
+```
+
+---
+
+## 🗺️ Roadmap atual
+
+### Concluído / em evolução
+
+- estrutura base do monorepo;
+- autenticação inicial e validações;
+- telas públicas e privadas organizadas;
+- timer, tarefas e base de analytics;
+- documentação visual e de regras de negócio.
+
+### Próximos passos
+
+- consolidar a integração completa entre timer, tarefas e métricas;
+- finalizar o fluxo de avatar e persistência de dados do usuário;
+- melhorar a experiência responsiva e a consistência visual;
+- expandir cobertura de testes e preparar deploy.
 
 ---
 
 ## 📄 Licença
 
-Licença: MIT — `LICENSE` a ser adicionada na criação do repositório.
-
-## O que você pode fazer?
-
-- **Uso livre**: Você pode usar o código em projetos pessoais ou de graça.
-- **Uso comercial**: Você pode vender o código ou cobrar por programas que o usam.
-- **Mudanças**: Você pode alterar, juntar ou adaptar o código como quiser
+Este projeto está em desenvolvimento e pode ser utilizado como referência para estudos e portfólio.
 
 ---
 
 ## 👤 Autor
 
-Desenvolvido por **Wesley** ([@DevWesleyMedeiros](https://github.com/DevWesleyMedeiros)) como parte do portfólio pessoal fullstack.
+Desenvolvido por Wesley como parte do portfólio pessoal fullstack.
