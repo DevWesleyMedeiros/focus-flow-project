@@ -1,8 +1,8 @@
 // Formulário de login implementado com React Hook Form + Zod - alinhado com REGRAS_DE_NEGOCIO_LOGIN.md
 "use client";
 
-import { authService } from "@/lib/api/authService";
-import { loginSchema } from "@/schemas/authSchemas";
+import { authService } from "../../lib/api/authService";
+import { loginSchema } from "../../schemas/authSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
