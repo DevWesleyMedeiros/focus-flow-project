@@ -17,7 +17,7 @@ authRouter.post("/logout", authMiddleware, logoutController);
 authRouter.post("/reset-password", authRateLimiter, resetPasswordController);
 
 // mostra o padrão recomendado pelo próprio Firebase sessão de cookies com Firebase
-authRouter.post("/auth/firebase_session", async (req, res) => {
+authRouter.post("/firebase_session", async (req, res) => {
   const { idToken, csrfToken } = req.body;
 
   // Expectativa: cliente envia um csrfToken obtido previamente (double-submit)
@@ -35,7 +35,7 @@ authRouter.post("/auth/firebase_session", async (req, res) => {
     const { sessionCookie, maxAge } = await createFirebaseSession(idToken);
 
     // Flag secure condicionada ao ambiente (evita falha em dev sem HTTPS) (ver se irá funcionar em desenvolvimento)
-    const secureFlag = process.env["NODE_ENN"] === "production";
+    const secureFlag = process.env["NODE_ENV"] === "production";
 
     // Use nomes específicos para evitar colisão com outros cookies (isolamento)
     res.cookie("firebase_session", sessionCookie, {

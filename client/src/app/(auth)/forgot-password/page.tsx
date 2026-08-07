@@ -1,5 +1,6 @@
 "use client";
 
+import { forgotPasswordSchema } from "../../../schemas/authSchemas";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -7,6 +8,7 @@ export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.parentElement?.parentElement?.classList.add("scale-[1.01]");
@@ -18,12 +20,20 @@ export default function ForgotPasswordPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const result = forgotPasswordSchema.safeParse({ email });
+    if (!result.success) {
+      setErrorMessage(result.error.issues[0]?.message ?? "E-mail inválido");
+      return;
+    }
+
+    setErrorMessage(null);
     setIsLoading(true);
-    
+
     // Simulação de envio de e-mail
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
     console.log("Forgot password request:", { email });
-    
+
     setIsLoading(false);
     setIsSubmitted(true);
   };
@@ -42,13 +52,17 @@ export default function ForgotPasswordPage() {
           {!isSubmitted ? (
             <>
               <p className="text-on-background/80 mb-6 text-center">
-                Informe seu e-mail e enviaremos instruções para redefinir sua senha.
+                Informe seu e-mail e enviaremos instruções para redefinir sua
+                senha.
               </p>
-              
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Campo E-mail */}
                 <div className="transition-transform duration-300 ease-out input-focus-effect rounded-xl">
-                  <label htmlFor="email" className="block text-label-caps text-primary/80 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-label-caps text-primary/80 mb-2"
+                  >
                     E-mail
                   </label>
                   <input
@@ -65,6 +79,15 @@ export default function ForgotPasswordPage() {
                   />
                 </div>
 
+                {errorMessage ? (
+                  <p
+                    className="rounded-lg border border-error/40 bg-error/10 px-3 py-2 text-sm text-error"
+                    role="alert"
+                  >
+                    {errorMessage}
+                  </p>
+                ) : null}
+
                 {/* Botão Enviar */}
                 <button
                   type="submit"
@@ -73,7 +96,9 @@ export default function ForgotPasswordPage() {
                 >
                   {isLoading ? (
                     <>
-                      <span className="material-symbols-outlined animate-spin text-xl">refresh</span>
+                      <span className="material-symbols-outlined animate-spin text-xl">
+                        refresh
+                      </span>
                       Enviando...
                     </>
                   ) : (
@@ -85,22 +110,29 @@ export default function ForgotPasswordPage() {
           ) : (
             <div className="text-center py-6">
               <div className="w-16 h-16 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="material-symbols-outlined text-3xl text-success">mail</span>
+                <span className="material-symbols-outlined text-3xl text-success">
+                  mail
+                </span>
               </div>
-              <h2 className="text-xl font-semibold text-on-background mb-2">E-mail enviado!</h2>
+              <h2 className="text-xl font-semibold text-on-background mb-2">
+                E-mail enviado!
+              </h2>
               <p className="text-on-background/70 mb-6">
-                Se o e-mail informado existir, você receberá instruções para redefinir sua senha em breve.
+                Se o e-mail informado existir, você receberá instruções para
+                redefinir sua senha em breve.
               </p>
             </div>
           )}
 
           {/* Link para voltar ao login */}
           <div className="mt-6 pt-6 border-t border-outline/10 text-center">
-            <Link 
-              href="/login" 
+            <Link
+              href="/login"
               className="text-primary hover:text-primary/80 transition-colors duration-200 inline-flex items-center gap-1"
             >
-              <span className="material-symbols-outlined text-lg">arrow_back</span>
+              <span className="material-symbols-outlined text-lg">
+                arrow_back
+              </span>
               Voltar para o login
             </Link>
           </div>

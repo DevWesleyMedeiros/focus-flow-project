@@ -1,5 +1,6 @@
 "use client";
 
+import { resetPasswordSchema } from "@/schemas/authSchemas";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -34,29 +35,13 @@ function ResetPasswordContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validação básica de senha (seguindo RN-AUTH-04)
-    if (newPassword !== confirmPassword) {
-      setErrorMessage("As senhas não coincidem");
-      setHasError(true);
-      return;
-    }
+    const result = resetPasswordSchema.safeParse({
+      password: newPassword,
+      confirmPassword,
+    });
 
-    if (newPassword.length < 8 || newPassword.length > 15) {
-      setErrorMessage("A senha deve ter entre 8 e 15 caracteres");
-      setHasError(true);
-      return;
-    }
-
-    // Validação dos requisitos de senha
-    const hasUppercase = /[A-Z]/.test(newPassword);
-    const hasLowercase = /[a-z]/.test(newPassword);
-    const hasNumber = /[0-9]/.test(newPassword);
-    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
-
-    if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecial) {
-      setErrorMessage(
-        "A senha deve conter: 1 maiúscula, 1 minúscula, 1 número e 1 caractere especial",
-      );
+    if (!result.success) {
+      setErrorMessage(result.error.issues[0]?.message ?? "Dados inválidos");
       setHasError(true);
       return;
     }
@@ -155,6 +140,15 @@ function ResetPasswordContent() {
                     <li>Pelo menos 1 caractere especial (!@#$%^&*())</li>
                   </ul>
                 </div>
+
+                {hasError ? (
+                  <p
+                    className="rounded-lg border border-error/40 bg-error/10 px-3 py-2 text-sm text-error"
+                    role="alert"
+                  >
+                    {errorMessage}
+                  </p>
+                ) : null}
 
                 {/* Botão Redefinir */}
                 <button

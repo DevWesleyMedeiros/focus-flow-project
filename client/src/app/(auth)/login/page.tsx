@@ -1,14 +1,23 @@
 "use client";
+import { loginSchema } from "../../../schemas/authSchemas";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implementar lógica de login posteriormente
+
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      setErrorMessage(result.error.issues[0]?.message ?? "Dados inválidos");
+      return;
+    }
+
+    setErrorMessage(null);
     console.log("Login attempt:", { email });
   };
 
@@ -97,6 +106,14 @@ export default function LoginPage() {
                 />
               </div>
             </div>
+            {errorMessage ? (
+              <p
+                className="rounded-lg border border-error/40 bg-error/10 px-3 py-2 text-sm text-error"
+                role="alert"
+              >
+                {errorMessage}
+              </p>
+            ) : null}
             <button
               type="submit"
               className="w-full bg-primary hover:bg-primary-container text-on-primary font-headline-md text-headline-md py-3.5 rounded-lg transition-all duration-200 transform active:scale-[0.98] flex items-center justify-center gap-2"

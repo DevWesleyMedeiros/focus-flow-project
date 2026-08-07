@@ -9,6 +9,10 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Senha é obrigatória"),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().email("E-mail inválido"),
+});
+
 export const registerSchema = z
   .object({
     email: z.string().email("E-mail inválido"),
