@@ -1,10 +1,10 @@
 import { app } from "./app";
-import { connection, prisma } from "./db";
+import { prisma } from "./db";
 
-const PORT = process.env["NEXTAUTH_URL"] || 3000;
+const PORT = process.env["PORT"] || 3000;
 
 async function main() {
-  await connection();
+  await prisma.$connect();
   console.log("✅ Conectado ao PostgreSQL via Prisma");
 
   app.listen(PORT, () => {

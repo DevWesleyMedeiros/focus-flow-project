@@ -1,8 +1,8 @@
 // arquivo que conecta meu cliente prisma com meu backend
 
-import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client";
+import "dotenv/config";
+import { PrismaClient } from "../generated/prisma";
 
 const connectionString = `${process.env["DATABASE_URL"]}`;
 

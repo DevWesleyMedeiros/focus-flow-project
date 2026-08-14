@@ -24,11 +24,11 @@ A documentação de regras de negócio para as telas principais está organizada
 Abaixo estão algumas capturas já registradas da interface atual do projeto:
 
 1. Tela de login
-![Tela de login](client/public/screenshots/pomodoro_login-screen.png)
+![Tela de login](client/public/screenshots/login-interface/pomodoro_login-screen.png)
 2. Tela de cadastro
-![Tela de cadastro](client/public/screenshots/pomodoro_register-screen.png)
+![Tela de cadastro](client/public/screenshots/login-interface/pomodoro_login-screen.pngpomodoro_register-screen.png)
 3. Tela de recuperação de senha
-![Tela de recuperação de senha](client/public/screenshots/pomodoro_forgot-password-screen.png)
+![Tela de recuperação de senha](client/public/screenshots/login-interface/pomodoro_forgot-password-screen.png)
 
 ---
 

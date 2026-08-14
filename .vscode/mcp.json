@@ -1,0 +1,37 @@
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "@playwright/mcp@latest"
+      ]
+    },
+    "postgres-focusflow": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://localhost/focusflow_dev"
+      ]
+    },
+    "mcp-docs": {
+      "type": "http",
+      "url": "https://modelcontextprotocol.io/mcp"
+    }
+  },
+  "servers": {
+    "local-filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${workspaceFolder}"
+      ],
+      "sandboxEnabled": true
+    }
+  }
+}
