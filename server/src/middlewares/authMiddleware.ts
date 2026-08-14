@@ -1,6 +1,7 @@
 // TODO: Middleware de autenticação Firebase - verificar token JWT
 import { NextFunction, Request, Response } from "express";
 import { adminAuth } from "../config/firebaseAdmin";
+import { verifyBackendSession } from "../services/authService";
 
 export async function authMiddleware(
   req: Request,
@@ -8,6 +9,7 @@ export async function authMiddleware(
   next: NextFunction,
 ) {
   const authHeader = req.headers.authorization;
+  const backendCookie = req.cookies?.["backend_session"];
   const sessionCookie = req.cookies?.["firebase_session"];
 
   try {
@@ -18,6 +20,12 @@ export async function authMiddleware(
       }
       const decodedToken = await adminAuth.verifyIdToken(idToken);
       (req as any).user = decodedToken;
+      return next();
+    }
+
+    if (backendCookie) {
+      const payload = await verifyBackendSession(backendCookie);
+      (req as any).user = { userId: payload.userId, provider: "LOCAL" };
       return next();
     }
 
