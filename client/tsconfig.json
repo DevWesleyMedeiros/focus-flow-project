@@ -10,18 +10,18 @@
     "strict": true,
     "noEmit": true,
     "incremental": true,
-    "module": "esnext",
+    "module": "nodenext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
+    "moduleResolution": "nodenext",
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "moduleResolution": "node"
+    ]
   },
   "include": [
     "next-env.d.ts",

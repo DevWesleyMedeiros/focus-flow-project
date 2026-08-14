@@ -1367,17 +1367,17 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    passwordTokenReset: number
-    focusSessions: number
-    tasks: number
     categories: number
+    focusSessions: number
+    passwordTokenReset: number
+    tasks: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    passwordTokenReset?: boolean | UserCountOutputTypeCountPasswordTokenResetArgs
-    focusSessions?: boolean | UserCountOutputTypeCountFocusSessionsArgs
-    tasks?: boolean | UserCountOutputTypeCountTasksArgs
     categories?: boolean | UserCountOutputTypeCountCategoriesArgs
+    focusSessions?: boolean | UserCountOutputTypeCountFocusSessionsArgs
+    passwordTokenReset?: boolean | UserCountOutputTypeCountPasswordTokenResetArgs
+    tasks?: boolean | UserCountOutputTypeCountTasksArgs
   }
 
   // Custom InputTypes
@@ -1394,8 +1394,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountPasswordTokenResetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PasswordTokenResetWhereInput
+  export type UserCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoryWhereInput
   }
 
   /**
@@ -1408,15 +1408,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
+  export type UserCountOutputTypeCountPasswordTokenResetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PasswordTokenResetWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountCategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CategoryWhereInput
+  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
   }
 
 
@@ -1709,10 +1709,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     avatar?: boolean | User$avatarArgs<ExtArgs>
-    passwordTokenReset?: boolean | User$passwordTokenResetArgs<ExtArgs>
-    focusSessions?: boolean | User$focusSessionsArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
+    focusSessions?: boolean | User$focusSessionsArgs<ExtArgs>
+    passwordTokenReset?: boolean | User$passwordTokenResetArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1752,10 +1752,10 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "displayName" | "passwordHash" | "firebaseUid" | "dailyGoal" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     avatar?: boolean | User$avatarArgs<ExtArgs>
-    passwordTokenReset?: boolean | User$passwordTokenResetArgs<ExtArgs>
-    focusSessions?: boolean | User$focusSessionsArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
     categories?: boolean | User$categoriesArgs<ExtArgs>
+    focusSessions?: boolean | User$focusSessionsArgs<ExtArgs>
+    passwordTokenReset?: boolean | User$passwordTokenResetArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1765,10 +1765,10 @@ export namespace Prisma {
     name: "User"
     objects: {
       avatar: Prisma.$AvatarPayload<ExtArgs> | null
-      passwordTokenReset: Prisma.$PasswordTokenResetPayload<ExtArgs>[]
-      focusSessions: Prisma.$FocusSessionPayload<ExtArgs>[]
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
       categories: Prisma.$CategoryPayload<ExtArgs>[]
+      focusSessions: Prisma.$FocusSessionPayload<ExtArgs>[]
+      passwordTokenReset: Prisma.$PasswordTokenResetPayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2174,10 +2174,10 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     avatar<T extends User$avatarArgs<ExtArgs> = {}>(args?: Subset<T, User$avatarArgs<ExtArgs>>): Prisma__AvatarClient<$Result.GetResult<Prisma.$AvatarPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    passwordTokenReset<T extends User$passwordTokenResetArgs<ExtArgs> = {}>(args?: Subset<T, User$passwordTokenResetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordTokenResetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    focusSessions<T extends User$focusSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$focusSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     categories<T extends User$categoriesArgs<ExtArgs> = {}>(args?: Subset<T, User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    focusSessions<T extends User$focusSessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$focusSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    passwordTokenReset<T extends User$passwordTokenResetArgs<ExtArgs> = {}>(args?: Subset<T, User$passwordTokenResetArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordTokenResetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2627,27 +2627,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.passwordTokenReset
+   * User.categories
    */
-  export type User$passwordTokenResetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the PasswordTokenReset
+     * Select specific fields to fetch from the Category
      */
-    select?: PasswordTokenResetSelect<ExtArgs> | null
+    select?: CategorySelect<ExtArgs> | null
     /**
-     * Omit specific fields from the PasswordTokenReset
+     * Omit specific fields from the Category
      */
-    omit?: PasswordTokenResetOmit<ExtArgs> | null
+    omit?: CategoryOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: PasswordTokenResetInclude<ExtArgs> | null
-    where?: PasswordTokenResetWhereInput
-    orderBy?: PasswordTokenResetOrderByWithRelationInput | PasswordTokenResetOrderByWithRelationInput[]
-    cursor?: PasswordTokenResetWhereUniqueInput
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
+    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
+    cursor?: CategoryWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: PasswordTokenResetScalarFieldEnum | PasswordTokenResetScalarFieldEnum[]
+    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
   }
 
   /**
@@ -2675,6 +2675,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.passwordTokenReset
+   */
+  export type User$passwordTokenResetArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PasswordTokenReset
+     */
+    select?: PasswordTokenResetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PasswordTokenReset
+     */
+    omit?: PasswordTokenResetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PasswordTokenResetInclude<ExtArgs> | null
+    where?: PasswordTokenResetWhereInput
+    orderBy?: PasswordTokenResetOrderByWithRelationInput | PasswordTokenResetOrderByWithRelationInput[]
+    cursor?: PasswordTokenResetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PasswordTokenResetScalarFieldEnum | PasswordTokenResetScalarFieldEnum[]
+  }
+
+  /**
    * User.tasks
    */
   export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2696,30 +2720,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
-  }
-
-  /**
-   * User.categories
-   */
-  export type User$categoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    where?: CategoryWhereInput
-    orderBy?: CategoryOrderByWithRelationInput | CategoryOrderByWithRelationInput[]
-    cursor?: CategoryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CategoryScalarFieldEnum | CategoryScalarFieldEnum[]
   }
 
   /**
@@ -5157,8 +5157,8 @@ export namespace Prisma {
     completed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["focusSession"]>
 
   export type FocusSessionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5171,8 +5171,8 @@ export namespace Prisma {
     completed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["focusSession"]>
 
   export type FocusSessionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5185,8 +5185,8 @@ export namespace Prisma {
     completed?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["focusSession"]>
 
   export type FocusSessionSelectScalar = {
@@ -5203,23 +5203,23 @@ export namespace Prisma {
 
   export type FocusSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "taskId" | "duration" | "startTime" | "endTime" | "completed" | "createdAt" | "updatedAt", ExtArgs["result"]["focusSession"]>
   export type FocusSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type FocusSessionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type FocusSessionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     task?: boolean | FocusSession$taskArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $FocusSessionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FocusSession"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       task: Prisma.$TaskPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5625,8 +5625,8 @@ export namespace Prisma {
    */
   export interface Prisma__FocusSessionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     task<T extends FocusSession$taskArgs<ExtArgs> = {}>(args?: Subset<T, FocusSession$taskArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6349,9 +6349,9 @@ export namespace Prisma {
     dueDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | Task$categoryArgs<ExtArgs>
     focusSessions?: boolean | Task$focusSessionsArgs<ExtArgs>
+    category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -6367,8 +6367,8 @@ export namespace Prisma {
     dueDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6383,8 +6383,8 @@ export namespace Prisma {
     dueDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -6403,26 +6403,26 @@ export namespace Prisma {
 
   export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "categoryId" | "title" | "description" | "priority" | "completed" | "order" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    category?: boolean | Task$categoryArgs<ExtArgs>
     focusSessions?: boolean | Task$focusSessionsArgs<ExtArgs>
+    category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | Task$categoryArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Task"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      category: Prisma.$CategoryPayload<ExtArgs> | null
       focusSessions: Prisma.$FocusSessionPayload<ExtArgs>[]
+      category: Prisma.$CategoryPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6830,9 +6830,9 @@ export namespace Prisma {
    */
   export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    category<T extends Task$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Task$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     focusSessions<T extends Task$focusSessionsArgs<ExtArgs> = {}>(args?: Subset<T, Task$focusSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    category<T extends Task$categoryArgs<ExtArgs> = {}>(args?: Subset<T, Task$categoryArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7274,25 +7274,6 @@ export namespace Prisma {
   }
 
   /**
-   * Task.category
-   */
-  export type Task$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Category
-     */
-    select?: CategorySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Category
-     */
-    omit?: CategoryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CategoryInclude<ExtArgs> | null
-    where?: CategoryWhereInput
-  }
-
-  /**
    * Task.focusSessions
    */
   export type Task$focusSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7314,6 +7295,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FocusSessionScalarFieldEnum | FocusSessionScalarFieldEnum[]
+  }
+
+  /**
+   * Task.category
+   */
+  export type Task$categoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Category
+     */
+    select?: CategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Category
+     */
+    omit?: CategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoryInclude<ExtArgs> | null
+    where?: CategoryWhereInput
   }
 
   /**
@@ -8659,10 +8659,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<AvatarNullableScalarRelationFilter, AvatarWhereInput> | null
-    passwordTokenReset?: PasswordTokenResetListRelationFilter
-    focusSessions?: FocusSessionListRelationFilter
-    tasks?: TaskListRelationFilter
     categories?: CategoryListRelationFilter
+    focusSessions?: FocusSessionListRelationFilter
+    passwordTokenReset?: PasswordTokenResetListRelationFilter
+    tasks?: TaskListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -8675,10 +8675,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     avatar?: AvatarOrderByWithRelationInput
-    passwordTokenReset?: PasswordTokenResetOrderByRelationAggregateInput
-    focusSessions?: FocusSessionOrderByRelationAggregateInput
-    tasks?: TaskOrderByRelationAggregateInput
     categories?: CategoryOrderByRelationAggregateInput
+    focusSessions?: FocusSessionOrderByRelationAggregateInput
+    passwordTokenReset?: PasswordTokenResetOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -8694,10 +8694,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     avatar?: XOR<AvatarNullableScalarRelationFilter, AvatarWhereInput> | null
-    passwordTokenReset?: PasswordTokenResetListRelationFilter
-    focusSessions?: FocusSessionListRelationFilter
-    tasks?: TaskListRelationFilter
     categories?: CategoryListRelationFilter
+    focusSessions?: FocusSessionListRelationFilter
+    passwordTokenReset?: PasswordTokenResetListRelationFilter
+    tasks?: TaskListRelationFilter
   }, "id" | "email" | "firebaseUid">
 
   export type UserOrderByWithAggregationInput = {
@@ -8865,8 +8865,8 @@ export namespace Prisma {
     completed?: BoolFilter<"FocusSession"> | boolean
     createdAt?: DateTimeFilter<"FocusSession"> | Date | string
     updatedAt?: DateTimeFilter<"FocusSession"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type FocusSessionOrderByWithRelationInput = {
@@ -8879,8 +8879,8 @@ export namespace Prisma {
     completed?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
     task?: TaskOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type FocusSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -8896,8 +8896,8 @@ export namespace Prisma {
     completed?: BoolFilter<"FocusSession"> | boolean
     createdAt?: DateTimeFilter<"FocusSession"> | Date | string
     updatedAt?: DateTimeFilter<"FocusSession"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     task?: XOR<TaskNullableScalarRelationFilter, TaskWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type FocusSessionOrderByWithAggregationInput = {
@@ -8947,9 +8947,9 @@ export namespace Prisma {
     dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     focusSessions?: FocusSessionListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -8964,9 +8964,9 @@ export namespace Prisma {
     dueDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-    category?: CategoryOrderByWithRelationInput
     focusSessions?: FocusSessionOrderByRelationAggregateInput
+    category?: CategoryOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -8984,9 +8984,9 @@ export namespace Prisma {
     dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
     focusSessions?: FocusSessionListRelationFilter
+    category?: XOR<CategoryNullableScalarRelationFilter, CategoryWhereInput> | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -9098,10 +9098,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9114,10 +9114,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9130,10 +9130,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9146,10 +9146,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9317,8 +9317,8 @@ export namespace Prisma {
     completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutFocusSessionsInput
     task?: TaskCreateNestedOneWithoutFocusSessionsInput
+    user: UserCreateNestedOneWithoutFocusSessionsInput
   }
 
   export type FocusSessionUncheckedCreateInput = {
@@ -9341,8 +9341,8 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutFocusSessionsNestedInput
     task?: TaskUpdateOneWithoutFocusSessionsNestedInput
+    user?: UserUpdateOneRequiredWithoutFocusSessionsNestedInput
   }
 
   export type FocusSessionUncheckedUpdateInput = {
@@ -9401,9 +9401,9 @@ export namespace Prisma {
     dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTasksInput
-    category?: CategoryCreateNestedOneWithoutTasksInput
     focusSessions?: FocusSessionCreateNestedManyWithoutTaskInput
+    category?: CategoryCreateNestedOneWithoutTasksInput
+    user: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -9431,9 +9431,9 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
-    category?: CategoryUpdateOneWithoutTasksNestedInput
     focusSessions?: FocusSessionUpdateManyWithoutTaskNestedInput
+    category?: CategoryUpdateOneWithoutTasksNestedInput
+    user?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -9614,10 +9614,10 @@ export namespace Prisma {
     isNot?: AvatarWhereInput | null
   }
 
-  export type PasswordTokenResetListRelationFilter = {
-    every?: PasswordTokenResetWhereInput
-    some?: PasswordTokenResetWhereInput
-    none?: PasswordTokenResetWhereInput
+  export type CategoryListRelationFilter = {
+    every?: CategoryWhereInput
+    some?: CategoryWhereInput
+    none?: CategoryWhereInput
   }
 
   export type FocusSessionListRelationFilter = {
@@ -9626,16 +9626,16 @@ export namespace Prisma {
     none?: FocusSessionWhereInput
   }
 
+  export type PasswordTokenResetListRelationFilter = {
+    every?: PasswordTokenResetWhereInput
+    some?: PasswordTokenResetWhereInput
+    none?: PasswordTokenResetWhereInput
+  }
+
   export type TaskListRelationFilter = {
     every?: TaskWhereInput
     some?: TaskWhereInput
     none?: TaskWhereInput
-  }
-
-  export type CategoryListRelationFilter = {
-    every?: CategoryWhereInput
-    some?: CategoryWhereInput
-    none?: CategoryWhereInput
   }
 
   export type SortOrderInput = {
@@ -9643,7 +9643,7 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type PasswordTokenResetOrderByRelationAggregateInput = {
+  export type CategoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9651,11 +9651,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type TaskOrderByRelationAggregateInput = {
+  export type PasswordTokenResetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CategoryOrderByRelationAggregateInput = {
+  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10025,11 +10025,11 @@ export namespace Prisma {
     connect?: AvatarWhereUniqueInput
   }
 
-  export type PasswordTokenResetCreateNestedManyWithoutUserInput = {
-    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
-    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
-    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+  export type CategoryCreateNestedManyWithoutUserInput = {
+    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
+    createMany?: CategoryCreateManyUserInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type FocusSessionCreateNestedManyWithoutUserInput = {
@@ -10039,18 +10039,18 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
   }
 
+  export type PasswordTokenResetCreateNestedManyWithoutUserInput = {
+    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
+    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
+    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+  }
+
   export type TaskCreateNestedManyWithoutUserInput = {
     create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
     createMany?: TaskCreateManyUserInputEnvelope
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type CategoryCreateNestedManyWithoutUserInput = {
-    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
-    createMany?: CategoryCreateManyUserInputEnvelope
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type AvatarUncheckedCreateNestedOneWithoutUserInput = {
@@ -10059,11 +10059,11 @@ export namespace Prisma {
     connect?: AvatarWhereUniqueInput
   }
 
-  export type PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
-    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
-    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+  export type CategoryUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
+    createMany?: CategoryCreateManyUserInputEnvelope
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type FocusSessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -10073,18 +10073,18 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
   }
 
+  export type PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
+    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
+    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
     createMany?: TaskCreateManyUserInputEnvelope
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
-  export type CategoryUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
-    createMany?: CategoryCreateManyUserInputEnvelope
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -10117,18 +10117,18 @@ export namespace Prisma {
     update?: XOR<XOR<AvatarUpdateToOneWithWhereWithoutUserInput, AvatarUpdateWithoutUserInput>, AvatarUncheckedUpdateWithoutUserInput>
   }
 
-  export type PasswordTokenResetUpdateManyWithoutUserNestedInput = {
-    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
-    upsert?: PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput | PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
-    set?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    disconnect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    delete?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    update?: PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput | PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: PasswordTokenResetUpdateManyWithWhereWithoutUserInput | PasswordTokenResetUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
+  export type CategoryUpdateManyWithoutUserNestedInput = {
+    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
+    upsert?: CategoryUpsertWithWhereUniqueWithoutUserInput | CategoryUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: CategoryCreateManyUserInputEnvelope
+    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
+    update?: CategoryUpdateWithWhereUniqueWithoutUserInput | CategoryUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: CategoryUpdateManyWithWhereWithoutUserInput | CategoryUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
   }
 
   export type FocusSessionUpdateManyWithoutUserNestedInput = {
@@ -10145,6 +10145,20 @@ export namespace Prisma {
     deleteMany?: FocusSessionScalarWhereInput | FocusSessionScalarWhereInput[]
   }
 
+  export type PasswordTokenResetUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
+    upsert?: PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput | PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
+    set?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    disconnect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    delete?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    update?: PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput | PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PasswordTokenResetUpdateManyWithWhereWithoutUserInput | PasswordTokenResetUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
+  }
+
   export type TaskUpdateManyWithoutUserNestedInput = {
     create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
@@ -10159,7 +10173,17 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type CategoryUpdateManyWithoutUserNestedInput = {
+  export type AvatarUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<AvatarCreateWithoutUserInput, AvatarUncheckedCreateWithoutUserInput>
+    connectOrCreate?: AvatarCreateOrConnectWithoutUserInput
+    upsert?: AvatarUpsertWithoutUserInput
+    disconnect?: AvatarWhereInput | boolean
+    delete?: AvatarWhereInput | boolean
+    connect?: AvatarWhereUniqueInput
+    update?: XOR<XOR<AvatarUpdateToOneWithWhereWithoutUserInput, AvatarUpdateWithoutUserInput>, AvatarUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CategoryUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
     upsert?: CategoryUpsertWithWhereUniqueWithoutUserInput | CategoryUpsertWithWhereUniqueWithoutUserInput[]
@@ -10171,30 +10195,6 @@ export namespace Prisma {
     update?: CategoryUpdateWithWhereUniqueWithoutUserInput | CategoryUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: CategoryUpdateManyWithWhereWithoutUserInput | CategoryUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-  }
-
-  export type AvatarUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<AvatarCreateWithoutUserInput, AvatarUncheckedCreateWithoutUserInput>
-    connectOrCreate?: AvatarCreateOrConnectWithoutUserInput
-    upsert?: AvatarUpsertWithoutUserInput
-    disconnect?: AvatarWhereInput | boolean
-    delete?: AvatarWhereInput | boolean
-    connect?: AvatarWhereUniqueInput
-    update?: XOR<XOR<AvatarUpdateToOneWithWhereWithoutUserInput, AvatarUpdateWithoutUserInput>, AvatarUncheckedUpdateWithoutUserInput>
-  }
-
-  export type PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
-    upsert?: PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput | PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
-    set?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    disconnect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    delete?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
-    update?: PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput | PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: PasswordTokenResetUpdateManyWithWhereWithoutUserInput | PasswordTokenResetUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
   }
 
   export type FocusSessionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -10211,6 +10211,20 @@ export namespace Prisma {
     deleteMany?: FocusSessionScalarWhereInput | FocusSessionScalarWhereInput[]
   }
 
+  export type PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput> | PasswordTokenResetCreateWithoutUserInput[] | PasswordTokenResetUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PasswordTokenResetCreateOrConnectWithoutUserInput | PasswordTokenResetCreateOrConnectWithoutUserInput[]
+    upsert?: PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput | PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PasswordTokenResetCreateManyUserInputEnvelope
+    set?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    disconnect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    delete?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    connect?: PasswordTokenResetWhereUniqueInput | PasswordTokenResetWhereUniqueInput[]
+    update?: PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput | PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PasswordTokenResetUpdateManyWithWhereWithoutUserInput | PasswordTokenResetUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
+  }
+
   export type TaskUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<TaskCreateWithoutUserInput, TaskUncheckedCreateWithoutUserInput> | TaskCreateWithoutUserInput[] | TaskUncheckedCreateWithoutUserInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutUserInput | TaskCreateOrConnectWithoutUserInput[]
@@ -10223,20 +10237,6 @@ export namespace Prisma {
     update?: TaskUpdateWithWhereUniqueWithoutUserInput | TaskUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: TaskUpdateManyWithWhereWithoutUserInput | TaskUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
-  export type CategoryUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput> | CategoryCreateWithoutUserInput[] | CategoryUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: CategoryCreateOrConnectWithoutUserInput | CategoryCreateOrConnectWithoutUserInput[]
-    upsert?: CategoryUpsertWithWhereUniqueWithoutUserInput | CategoryUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: CategoryCreateManyUserInputEnvelope
-    set?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    disconnect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    delete?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    connect?: CategoryWhereUniqueInput | CategoryWhereUniqueInput[]
-    update?: CategoryUpdateWithWhereUniqueWithoutUserInput | CategoryUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: CategoryUpdateManyWithWhereWithoutUserInput | CategoryUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAvatarInput = {
@@ -10267,16 +10267,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPasswordTokenResetInput, UserUpdateWithoutPasswordTokenResetInput>, UserUncheckedUpdateWithoutPasswordTokenResetInput>
   }
 
-  export type UserCreateNestedOneWithoutFocusSessionsInput = {
-    create?: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFocusSessionsInput
-    connect?: UserWhereUniqueInput
-  }
-
   export type TaskCreateNestedOneWithoutFocusSessionsInput = {
     create?: XOR<TaskCreateWithoutFocusSessionsInput, TaskUncheckedCreateWithoutFocusSessionsInput>
     connectOrCreate?: TaskCreateOrConnectWithoutFocusSessionsInput
     connect?: TaskWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutFocusSessionsInput = {
+    create?: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFocusSessionsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -10285,14 +10285,6 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type UserUpdateOneRequiredWithoutFocusSessionsNestedInput = {
-    create?: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFocusSessionsInput
-    upsert?: UserUpsertWithoutFocusSessionsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFocusSessionsInput, UserUpdateWithoutFocusSessionsInput>, UserUncheckedUpdateWithoutFocusSessionsInput>
   }
 
   export type TaskUpdateOneWithoutFocusSessionsNestedInput = {
@@ -10305,10 +10297,19 @@ export namespace Prisma {
     update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutFocusSessionsInput, TaskUpdateWithoutFocusSessionsInput>, TaskUncheckedUpdateWithoutFocusSessionsInput>
   }
 
-  export type UserCreateNestedOneWithoutTasksInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+  export type UserUpdateOneRequiredWithoutFocusSessionsNestedInput = {
+    create?: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFocusSessionsInput
+    upsert?: UserUpsertWithoutFocusSessionsInput
     connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFocusSessionsInput, UserUpdateWithoutFocusSessionsInput>, UserUncheckedUpdateWithoutFocusSessionsInput>
+  }
+
+  export type FocusSessionCreateNestedManyWithoutTaskInput = {
+    create?: XOR<FocusSessionCreateWithoutTaskInput, FocusSessionUncheckedCreateWithoutTaskInput> | FocusSessionCreateWithoutTaskInput[] | FocusSessionUncheckedCreateWithoutTaskInput[]
+    connectOrCreate?: FocusSessionCreateOrConnectWithoutTaskInput | FocusSessionCreateOrConnectWithoutTaskInput[]
+    createMany?: FocusSessionCreateManyTaskInputEnvelope
+    connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
   }
 
   export type CategoryCreateNestedOneWithoutTasksInput = {
@@ -10317,11 +10318,10 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
-  export type FocusSessionCreateNestedManyWithoutTaskInput = {
-    create?: XOR<FocusSessionCreateWithoutTaskInput, FocusSessionUncheckedCreateWithoutTaskInput> | FocusSessionCreateWithoutTaskInput[] | FocusSessionUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: FocusSessionCreateOrConnectWithoutTaskInput | FocusSessionCreateOrConnectWithoutTaskInput[]
-    createMany?: FocusSessionCreateManyTaskInputEnvelope
-    connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
+  export type UserCreateNestedOneWithoutTasksInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+    connect?: UserWhereUniqueInput
   }
 
   export type FocusSessionUncheckedCreateNestedManyWithoutTaskInput = {
@@ -10333,24 +10333,6 @@ export namespace Prisma {
 
   export type EnumPriorityFieldUpdateOperationsInput = {
     set?: $Enums.Priority
-  }
-
-  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
-    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
-    upsert?: UserUpsertWithoutTasksInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
-  }
-
-  export type CategoryUpdateOneWithoutTasksNestedInput = {
-    create?: XOR<CategoryCreateWithoutTasksInput, CategoryUncheckedCreateWithoutTasksInput>
-    connectOrCreate?: CategoryCreateOrConnectWithoutTasksInput
-    upsert?: CategoryUpsertWithoutTasksInput
-    disconnect?: CategoryWhereInput | boolean
-    delete?: CategoryWhereInput | boolean
-    connect?: CategoryWhereUniqueInput
-    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTasksInput, CategoryUpdateWithoutTasksInput>, CategoryUncheckedUpdateWithoutTasksInput>
   }
 
   export type FocusSessionUpdateManyWithoutTaskNestedInput = {
@@ -10365,6 +10347,24 @@ export namespace Prisma {
     update?: FocusSessionUpdateWithWhereUniqueWithoutTaskInput | FocusSessionUpdateWithWhereUniqueWithoutTaskInput[]
     updateMany?: FocusSessionUpdateManyWithWhereWithoutTaskInput | FocusSessionUpdateManyWithWhereWithoutTaskInput[]
     deleteMany?: FocusSessionScalarWhereInput | FocusSessionScalarWhereInput[]
+  }
+
+  export type CategoryUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<CategoryCreateWithoutTasksInput, CategoryUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: CategoryCreateOrConnectWithoutTasksInput
+    upsert?: CategoryUpsertWithoutTasksInput
+    disconnect?: CategoryWhereInput | boolean
+    delete?: CategoryWhereInput | boolean
+    connect?: CategoryWhereUniqueInput
+    update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTasksInput, CategoryUpdateWithoutTasksInput>, CategoryUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+    upsert?: UserUpsertWithoutTasksInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
   }
 
   export type FocusSessionUncheckedUpdateManyWithoutTaskNestedInput = {
@@ -10651,27 +10651,31 @@ export namespace Prisma {
     create: XOR<AvatarCreateWithoutUserInput, AvatarUncheckedCreateWithoutUserInput>
   }
 
-  export type PasswordTokenResetCreateWithoutUserInput = {
+  export type CategoryCreateWithoutUserInput = {
     id?: string
-    token: string
-    expiresAt: Date | string
+    name: string
+    color: string
     createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: TaskCreateNestedManyWithoutCategoryInput
   }
 
-  export type PasswordTokenResetUncheckedCreateWithoutUserInput = {
+  export type CategoryUncheckedCreateWithoutUserInput = {
     id?: string
-    token: string
-    expiresAt: Date | string
+    name: string
+    color: string
     createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: TaskUncheckedCreateNestedManyWithoutCategoryInput
   }
 
-  export type PasswordTokenResetCreateOrConnectWithoutUserInput = {
-    where: PasswordTokenResetWhereUniqueInput
-    create: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput>
+  export type CategoryCreateOrConnectWithoutUserInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput>
   }
 
-  export type PasswordTokenResetCreateManyUserInputEnvelope = {
-    data: PasswordTokenResetCreateManyUserInput | PasswordTokenResetCreateManyUserInput[]
+  export type CategoryCreateManyUserInputEnvelope = {
+    data: CategoryCreateManyUserInput | CategoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -10707,6 +10711,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PasswordTokenResetCreateWithoutUserInput = {
+    id?: string
+    token: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PasswordTokenResetUncheckedCreateWithoutUserInput = {
+    id?: string
+    token: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PasswordTokenResetCreateOrConnectWithoutUserInput = {
+    where: PasswordTokenResetWhereUniqueInput
+    create: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput>
+  }
+
+  export type PasswordTokenResetCreateManyUserInputEnvelope = {
+    data: PasswordTokenResetCreateManyUserInput | PasswordTokenResetCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TaskCreateWithoutUserInput = {
     id?: string
     title: string
@@ -10717,8 +10745,8 @@ export namespace Prisma {
     dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    category?: CategoryCreateNestedOneWithoutTasksInput
     focusSessions?: FocusSessionCreateNestedManyWithoutTaskInput
+    category?: CategoryCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateWithoutUserInput = {
@@ -10742,34 +10770,6 @@ export namespace Prisma {
 
   export type TaskCreateManyUserInputEnvelope = {
     data: TaskCreateManyUserInput | TaskCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CategoryCreateWithoutUserInput = {
-    id?: string
-    name: string
-    color: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tasks?: TaskCreateNestedManyWithoutCategoryInput
-  }
-
-  export type CategoryUncheckedCreateWithoutUserInput = {
-    id?: string
-    name: string
-    color: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tasks?: TaskUncheckedCreateNestedManyWithoutCategoryInput
-  }
-
-  export type CategoryCreateOrConnectWithoutUserInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput>
-  }
-
-  export type CategoryCreateManyUserInputEnvelope = {
-    data: CategoryCreateManyUserInput | CategoryCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -10802,31 +10802,32 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput = {
-    where: PasswordTokenResetWhereUniqueInput
-    update: XOR<PasswordTokenResetUpdateWithoutUserInput, PasswordTokenResetUncheckedUpdateWithoutUserInput>
-    create: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput>
+  export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
+    where: CategoryWhereUniqueInput
+    update: XOR<CategoryUpdateWithoutUserInput, CategoryUncheckedUpdateWithoutUserInput>
+    create: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput>
   }
 
-  export type PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput = {
-    where: PasswordTokenResetWhereUniqueInput
-    data: XOR<PasswordTokenResetUpdateWithoutUserInput, PasswordTokenResetUncheckedUpdateWithoutUserInput>
+  export type CategoryUpdateWithWhereUniqueWithoutUserInput = {
+    where: CategoryWhereUniqueInput
+    data: XOR<CategoryUpdateWithoutUserInput, CategoryUncheckedUpdateWithoutUserInput>
   }
 
-  export type PasswordTokenResetUpdateManyWithWhereWithoutUserInput = {
-    where: PasswordTokenResetScalarWhereInput
-    data: XOR<PasswordTokenResetUpdateManyMutationInput, PasswordTokenResetUncheckedUpdateManyWithoutUserInput>
+  export type CategoryUpdateManyWithWhereWithoutUserInput = {
+    where: CategoryScalarWhereInput
+    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type PasswordTokenResetScalarWhereInput = {
-    AND?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
-    OR?: PasswordTokenResetScalarWhereInput[]
-    NOT?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
-    id?: StringFilter<"PasswordTokenReset"> | string
-    userId?: StringFilter<"PasswordTokenReset"> | string
-    token?: StringFilter<"PasswordTokenReset"> | string
-    expiresAt?: DateTimeFilter<"PasswordTokenReset"> | Date | string
-    createdAt?: DateTimeFilter<"PasswordTokenReset"> | Date | string
+  export type CategoryScalarWhereInput = {
+    AND?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    OR?: CategoryScalarWhereInput[]
+    NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
+    id?: StringFilter<"Category"> | string
+    name?: StringFilter<"Category"> | string
+    color?: StringFilter<"Category"> | string
+    userId?: StringFilter<"Category"> | string
+    createdAt?: DateTimeFilter<"Category"> | Date | string
+    updatedAt?: DateTimeFilter<"Category"> | Date | string
   }
 
   export type FocusSessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -10858,6 +10859,33 @@ export namespace Prisma {
     completed?: BoolFilter<"FocusSession"> | boolean
     createdAt?: DateTimeFilter<"FocusSession"> | Date | string
     updatedAt?: DateTimeFilter<"FocusSession"> | Date | string
+  }
+
+  export type PasswordTokenResetUpsertWithWhereUniqueWithoutUserInput = {
+    where: PasswordTokenResetWhereUniqueInput
+    update: XOR<PasswordTokenResetUpdateWithoutUserInput, PasswordTokenResetUncheckedUpdateWithoutUserInput>
+    create: XOR<PasswordTokenResetCreateWithoutUserInput, PasswordTokenResetUncheckedCreateWithoutUserInput>
+  }
+
+  export type PasswordTokenResetUpdateWithWhereUniqueWithoutUserInput = {
+    where: PasswordTokenResetWhereUniqueInput
+    data: XOR<PasswordTokenResetUpdateWithoutUserInput, PasswordTokenResetUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PasswordTokenResetUpdateManyWithWhereWithoutUserInput = {
+    where: PasswordTokenResetScalarWhereInput
+    data: XOR<PasswordTokenResetUpdateManyMutationInput, PasswordTokenResetUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PasswordTokenResetScalarWhereInput = {
+    AND?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
+    OR?: PasswordTokenResetScalarWhereInput[]
+    NOT?: PasswordTokenResetScalarWhereInput | PasswordTokenResetScalarWhereInput[]
+    id?: StringFilter<"PasswordTokenReset"> | string
+    userId?: StringFilter<"PasswordTokenReset"> | string
+    token?: StringFilter<"PasswordTokenReset"> | string
+    expiresAt?: DateTimeFilter<"PasswordTokenReset"> | Date | string
+    createdAt?: DateTimeFilter<"PasswordTokenReset"> | Date | string
   }
 
   export type TaskUpsertWithWhereUniqueWithoutUserInput = {
@@ -10893,34 +10921,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Task"> | Date | string
   }
 
-  export type CategoryUpsertWithWhereUniqueWithoutUserInput = {
-    where: CategoryWhereUniqueInput
-    update: XOR<CategoryUpdateWithoutUserInput, CategoryUncheckedUpdateWithoutUserInput>
-    create: XOR<CategoryCreateWithoutUserInput, CategoryUncheckedCreateWithoutUserInput>
-  }
-
-  export type CategoryUpdateWithWhereUniqueWithoutUserInput = {
-    where: CategoryWhereUniqueInput
-    data: XOR<CategoryUpdateWithoutUserInput, CategoryUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CategoryUpdateManyWithWhereWithoutUserInput = {
-    where: CategoryScalarWhereInput
-    data: XOR<CategoryUpdateManyMutationInput, CategoryUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type CategoryScalarWhereInput = {
-    AND?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-    OR?: CategoryScalarWhereInput[]
-    NOT?: CategoryScalarWhereInput | CategoryScalarWhereInput[]
-    id?: StringFilter<"Category"> | string
-    name?: StringFilter<"Category"> | string
-    color?: StringFilter<"Category"> | string
-    userId?: StringFilter<"Category"> | string
-    createdAt?: DateTimeFilter<"Category"> | Date | string
-    updatedAt?: DateTimeFilter<"Category"> | Date | string
-  }
-
   export type UserCreateWithoutAvatarInput = {
     id?: string
     email: string
@@ -10930,10 +10930,10 @@ export namespace Prisma {
     dailyGoal?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
     categories?: CategoryCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAvatarInput = {
@@ -10945,10 +10945,10 @@ export namespace Prisma {
     dailyGoal?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
     categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAvatarInput = {
@@ -10976,10 +10976,10 @@ export namespace Prisma {
     dailyGoal?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
     categories?: CategoryUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAvatarInput = {
@@ -10991,10 +10991,10 @@ export namespace Prisma {
     dailyGoal?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
     categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutPasswordTokenResetInput = {
@@ -11007,9 +11007,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarCreateNestedOneWithoutUserInput
+    categories?: CategoryCreateNestedManyWithoutUserInput
     focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutUserInput
-    categories?: CategoryCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPasswordTokenResetInput = {
@@ -11022,9 +11022,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
     focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPasswordTokenResetInput = {
@@ -11053,9 +11053,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUpdateOneWithoutUserNestedInput
+    categories?: CategoryUpdateManyWithoutUserNestedInput
     focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
     tasks?: TaskUpdateManyWithoutUserNestedInput
-    categories?: CategoryUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasswordTokenResetInput = {
@@ -11068,44 +11068,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
     focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutFocusSessionsInput = {
-    id?: string
-    email: string
-    displayName: string
-    passwordHash?: string | null
-    firebaseUid?: string | null
-    dailyGoal?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    avatar?: AvatarCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutUserInput
-    categories?: CategoryCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutFocusSessionsInput = {
-    id?: string
-    email: string
-    displayName: string
-    passwordHash?: string | null
-    firebaseUid?: string | null
-    dailyGoal?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
-    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutFocusSessionsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
   }
 
   export type TaskCreateWithoutFocusSessionsInput = {
@@ -11118,8 +11083,8 @@ export namespace Prisma {
     dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTasksInput
     category?: CategoryCreateNestedOneWithoutTasksInput
+    user: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateWithoutFocusSessionsInput = {
@@ -11141,45 +11106,39 @@ export namespace Prisma {
     create: XOR<TaskCreateWithoutFocusSessionsInput, TaskUncheckedCreateWithoutFocusSessionsInput>
   }
 
-  export type UserUpsertWithoutFocusSessionsInput = {
-    update: XOR<UserUpdateWithoutFocusSessionsInput, UserUncheckedUpdateWithoutFocusSessionsInput>
+  export type UserCreateWithoutFocusSessionsInput = {
+    id?: string
+    email: string
+    displayName: string
+    passwordHash?: string | null
+    firebaseUid?: string | null
+    dailyGoal?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    avatar?: AvatarCreateNestedOneWithoutUserInput
+    categories?: CategoryCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutFocusSessionsInput = {
+    id?: string
+    email: string
+    displayName: string
+    passwordHash?: string | null
+    firebaseUid?: string | null
+    dailyGoal?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutFocusSessionsInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutFocusSessionsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutFocusSessionsInput, UserUncheckedUpdateWithoutFocusSessionsInput>
-  }
-
-  export type UserUpdateWithoutFocusSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
-    dailyGoal?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    avatar?: AvatarUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutUserNestedInput
-    categories?: CategoryUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutFocusSessionsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
-    dailyGoal?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
-    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TaskUpsertWithoutFocusSessionsInput = {
@@ -11203,8 +11162,8 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
     category?: CategoryUpdateOneWithoutTasksNestedInput
+    user?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutFocusSessionsInput = {
@@ -11221,62 +11180,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutTasksInput = {
-    id?: string
-    email: string
-    displayName: string
-    passwordHash?: string | null
-    firebaseUid?: string | null
-    dailyGoal?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    avatar?: AvatarCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
-    categories?: CategoryCreateNestedManyWithoutUserInput
+  export type UserUpsertWithoutFocusSessionsInput = {
+    update: XOR<UserUpdateWithoutFocusSessionsInput, UserUncheckedUpdateWithoutFocusSessionsInput>
+    create: XOR<UserCreateWithoutFocusSessionsInput, UserUncheckedCreateWithoutFocusSessionsInput>
+    where?: UserWhereInput
   }
 
-  export type UserUncheckedCreateWithoutTasksInput = {
-    id?: string
-    email: string
-    displayName: string
-    passwordHash?: string | null
-    firebaseUid?: string | null
-    dailyGoal?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
-    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
-    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+  export type UserUpdateToOneWithWhereWithoutFocusSessionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutFocusSessionsInput, UserUncheckedUpdateWithoutFocusSessionsInput>
   }
 
-  export type UserCreateOrConnectWithoutTasksInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+  export type UserUpdateWithoutFocusSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyGoal?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: AvatarUpdateOneWithoutUserNestedInput
+    categories?: CategoryUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
-  export type CategoryCreateWithoutTasksInput = {
-    id?: string
-    name: string
-    color: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutCategoriesInput
-  }
-
-  export type CategoryUncheckedCreateWithoutTasksInput = {
-    id?: string
-    name: string
-    color: string
-    userId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type CategoryCreateOrConnectWithoutTasksInput = {
-    where: CategoryWhereUniqueInput
-    create: XOR<CategoryCreateWithoutTasksInput, CategoryUncheckedCreateWithoutTasksInput>
+  export type UserUncheckedUpdateWithoutFocusSessionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyGoal?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FocusSessionCreateWithoutTaskInput = {
@@ -11311,45 +11253,78 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutTasksInput = {
-    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+  export type CategoryCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    color: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutCategoriesInput
+  }
+
+  export type CategoryUncheckedCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    color: string
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CategoryCreateOrConnectWithoutTasksInput = {
+    where: CategoryWhereUniqueInput
+    create: XOR<CategoryCreateWithoutTasksInput, CategoryUncheckedCreateWithoutTasksInput>
+  }
+
+  export type UserCreateWithoutTasksInput = {
+    id?: string
+    email: string
+    displayName: string
+    passwordHash?: string | null
+    firebaseUid?: string | null
+    dailyGoal?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    avatar?: AvatarCreateNestedOneWithoutUserInput
+    categories?: CategoryCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTasksInput = {
+    id?: string
+    email: string
+    displayName: string
+    passwordHash?: string | null
+    firebaseUid?: string | null
+    dailyGoal?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
+    categories?: CategoryUncheckedCreateNestedManyWithoutUserInput
+    focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTasksInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
-    where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTasksInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+  export type FocusSessionUpsertWithWhereUniqueWithoutTaskInput = {
+    where: FocusSessionWhereUniqueInput
+    update: XOR<FocusSessionUpdateWithoutTaskInput, FocusSessionUncheckedUpdateWithoutTaskInput>
+    create: XOR<FocusSessionCreateWithoutTaskInput, FocusSessionUncheckedCreateWithoutTaskInput>
   }
 
-  export type UserUpdateWithoutTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
-    dailyGoal?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    avatar?: AvatarUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
-    categories?: CategoryUpdateManyWithoutUserNestedInput
+  export type FocusSessionUpdateWithWhereUniqueWithoutTaskInput = {
+    where: FocusSessionWhereUniqueInput
+    data: XOR<FocusSessionUpdateWithoutTaskInput, FocusSessionUncheckedUpdateWithoutTaskInput>
   }
 
-  export type UserUncheckedUpdateWithoutTasksInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    displayName?: StringFieldUpdateOperationsInput | string
-    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
-    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
-    dailyGoal?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
-    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
-    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+  export type FocusSessionUpdateManyWithWhereWithoutTaskInput = {
+    where: FocusSessionScalarWhereInput
+    data: XOR<FocusSessionUpdateManyMutationInput, FocusSessionUncheckedUpdateManyWithoutTaskInput>
   }
 
   export type CategoryUpsertWithoutTasksInput = {
@@ -11381,20 +11356,45 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type FocusSessionUpsertWithWhereUniqueWithoutTaskInput = {
-    where: FocusSessionWhereUniqueInput
-    update: XOR<FocusSessionUpdateWithoutTaskInput, FocusSessionUncheckedUpdateWithoutTaskInput>
-    create: XOR<FocusSessionCreateWithoutTaskInput, FocusSessionUncheckedCreateWithoutTaskInput>
+  export type UserUpsertWithoutTasksInput = {
+    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    where?: UserWhereInput
   }
 
-  export type FocusSessionUpdateWithWhereUniqueWithoutTaskInput = {
-    where: FocusSessionWhereUniqueInput
-    data: XOR<FocusSessionUpdateWithoutTaskInput, FocusSessionUncheckedUpdateWithoutTaskInput>
+  export type UserUpdateToOneWithWhereWithoutTasksInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
   }
 
-  export type FocusSessionUpdateManyWithWhereWithoutTaskInput = {
-    where: FocusSessionScalarWhereInput
-    data: XOR<FocusSessionUpdateManyMutationInput, FocusSessionUncheckedUpdateManyWithoutTaskInput>
+  export type UserUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyGoal?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: AvatarUpdateOneWithoutUserNestedInput
+    categories?: CategoryUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    displayName?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
+    dailyGoal?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
+    categories?: CategoryUncheckedUpdateManyWithoutUserNestedInput
+    focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCategoriesInput = {
@@ -11407,8 +11407,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
     focusSessions?: FocusSessionCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutUserInput
   }
 
@@ -11422,8 +11422,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: AvatarUncheckedCreateNestedOneWithoutUserInput
-    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
     focusSessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    passwordTokenReset?: PasswordTokenResetUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11442,8 +11442,8 @@ export namespace Prisma {
     dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTasksInput
     focusSessions?: FocusSessionCreateNestedManyWithoutTaskInput
+    user: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateWithoutCategoryInput = {
@@ -11491,8 +11491,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
     focusSessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUpdateManyWithoutUserNestedInput
     tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
@@ -11506,8 +11506,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: AvatarUncheckedUpdateOneWithoutUserNestedInput
-    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
     focusSessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    passwordTokenReset?: PasswordTokenResetUncheckedUpdateManyWithoutUserNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11527,11 +11527,12 @@ export namespace Prisma {
     data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCategoryInput>
   }
 
-  export type PasswordTokenResetCreateManyUserInput = {
+  export type CategoryCreateManyUserInput = {
     id?: string
-    token: string
-    expiresAt: Date | string
+    name: string
+    color: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type FocusSessionCreateManyUserInput = {
@@ -11543,6 +11544,13 @@ export namespace Prisma {
     completed?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type PasswordTokenResetCreateManyUserInput = {
+    id?: string
+    token: string
+    expiresAt: Date | string
+    createdAt?: Date | string
   }
 
   export type TaskCreateManyUserInput = {
@@ -11558,33 +11566,30 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type CategoryCreateManyUserInput = {
-    id?: string
-    name: string
-    color: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type CategoryUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: TaskUpdateManyWithoutCategoryNestedInput
   }
 
-  export type PasswordTokenResetUpdateWithoutUserInput = {
+  export type CategoryUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: TaskUncheckedUpdateManyWithoutCategoryNestedInput
   }
 
-  export type PasswordTokenResetUncheckedUpdateWithoutUserInput = {
+  export type CategoryUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type PasswordTokenResetUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    token?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FocusSessionUpdateWithoutUserInput = {
@@ -11620,6 +11625,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PasswordTokenResetUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PasswordTokenResetUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PasswordTokenResetUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    token?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TaskUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -11630,8 +11656,8 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: CategoryUpdateOneWithoutTasksNestedInput
     focusSessions?: FocusSessionUpdateManyWithoutTaskNestedInput
+    category?: CategoryUpdateOneWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutUserInput = {
@@ -11657,32 +11683,6 @@ export namespace Prisma {
     completed?: BoolFieldUpdateOperationsInput | boolean
     order?: IntFieldUpdateOperationsInput | number
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CategoryUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tasks?: TaskUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tasks?: TaskUncheckedUpdateManyWithoutCategoryNestedInput
-  }
-
-  export type CategoryUncheckedUpdateManyWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11754,8 +11754,8 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTasksNestedInput
     focusSessions?: FocusSessionUpdateManyWithoutTaskNestedInput
+    user?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutCategoryInput = {
