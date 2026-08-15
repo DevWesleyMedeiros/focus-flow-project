@@ -1,7 +1,7 @@
 "use client";
-import { loginSchema } from "../../../schemas/authSchemas";
 import Link from "next/link";
 import { useState } from "react";
+import { loginSchema } from "../../../schemas/authSchemas";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -43,10 +43,10 @@ export default function LoginPage() {
         <div className="bg-surface-container border border-outline-variant p-8 md:p-10 rounded-xl shadow-2xl transition-all duration-300">
           <div className="mb-10">
             <h2 className="font-headline-lg text-headline-lg text-on-surface mb-2">
-              Welcome back
+              BEM VINDO DE VOLTA
             </h2>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Resume your flow. Sign in to your deep work workspace.
+              Retomar seu fluxo. Entre no seu workspace.
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -55,7 +55,7 @@ export default function LoginPage() {
                 className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                 htmlFor="email"
               >
-                EMAIL ADDRESS
+                EMAIL
               </label>
               <div className="relative flex items-center input-focus-effect rounded-lg">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[20px]">
@@ -80,13 +80,13 @@ export default function LoginPage() {
                   className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                   htmlFor="password"
                 >
-                  PASSWORD
+                  Senha
                 </label>
                 <Link
                   href="/forgot-password"
                   className="font-label-caps text-[10px] text-primary hover:underline transition-all"
                 >
-                  FORGOT?
+                  Esqueceu sua senha?
                 </Link>
               </div>
               <div className="relative flex items-center input-focus-effect rounded-lg">
@@ -130,7 +130,7 @@ export default function LoginPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-surface-container px-4 text-outline font-label-caps text-label-caps">
-                Or continue with
+                ou continue com
               </span>
             </div>
           </div>
@@ -161,12 +161,12 @@ export default function LoginPage() {
         </div>
         <footer className="mt-8 text-center space-y-4">
           <p className="font-body-sm text-body-sm text-on-surface-variant">
-            Don't have an account?{" "}
+            Não tem uma conta?{" "}
             <Link
               href="/register"
               className="text-primary font-semibold hover:underline decoration-2 underline-offset-4"
             >
-              Create workspace
+              Criar workspace
             </Link>
           </p>
           <div className="flex justify-center gap-6">
@@ -174,13 +174,13 @@ export default function LoginPage() {
               href="#"
               className="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors"
             >
-              Privacy Policy
+              Política de privacidade
             </a>
             <a
               href="#"
               className="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors"
             >
-              Terms of Service
+              Termos de serviço
             </a>
           </div>
         </footer>

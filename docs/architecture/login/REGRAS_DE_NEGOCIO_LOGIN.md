@@ -1,8 +1,8 @@
 # Regras de Negócio — Tela de Login (Login View)
 
 **Projeto:** focus-flow-project (nome anterior: pomodoro-study) — FocusFlow
-**Versão do documento:** v1.2.0 — formalização dos fluxos de recuperação de senha (Google e local, com token)
-**Status geral da tela:** � Em andamento (implementação parcial)
+**Versão do documento:** v1.3.0 — auditoria de segurança "vibe coding" (5 falhas mais comuns em app gerado por IA), incorporada à v1.2.0 (fluxos de recuperação de senha Google/local com token)
+**Status geral da tela:** 🟡 Em andamento (implementação parcial)
 
 > Legenda: 🟢 Implementado · 🟡 Em andamento · 🔴 Proposto
 
@@ -20,6 +20,8 @@ A autenticação é **híbrida**, com dois provedores de identidade distintos qu
 
 Isso significa que a tabela `User` precisa suportar os dois formatos ao mesmo tempo: um campo `passwordHash` **opcional** (`null` para usuários Google) e um `firebaseUid` **opcional** (`null` para usuários locais), com uma constraint de aplicação garantindo que pelo menos um dos dois exista. Essa dualidade é a peça mais delicada do schema — recomendo modelá-la com cuidado (ou até um enum `authProvider: 'GOOGLE' | 'LOCAL'` para deixar explícito qual caminho aquele usuário usa, evitando checagens implícitas espalhadas pelo código).
 
+> 🔒 **Nota de segurança (v1.3.0 — auditoria "vibe coding"):** o Firebase é usado aqui **apenas como provedor de identidade** (Firebase Authentication) — os dados do usuário vivem em PostgreSQL via Prisma, não em Firestore/Realtime Database. Por isso, *Firestore Security Rules* (o equivalente do Firebase ao RLS do Postgres) **não se aplicam** a este projeto; não há nada para "ativar" nesse sentido. A chave de API do Firebase client é **pública por design** (vai no bundle do frontend, assim como a `anon key` do Supabase) — protegê-la não é o objetivo. O que protege de verdade é: (1) o backend **sempre** validar o ID Token do Firebase antes de confiar em qualquer identidade (RF-06/RN-AUTH-08-09), e (2) a `service account` do Firebase Admin SDK (essa sim secreta) nunca sair do backend (RNF-03). Ver RN-SEC-01 abaixo.
+
 ---
 
 ## 2. Requisitos Funcionais (RF)
@@ -29,7 +31,7 @@ Isso significa que a tabela `User` precisa suportar os dois formatos ao mesmo te
 | RF-01 | Usuário deve poder se autenticar com e-mail e senha via Firebase Authentication | 🔴 |
 | RF-02 | Usuário deve poder se autenticar com sua conta Google via Firebase Auth (OAuth Google) | 🔴 |
 | RF-03 | Usuário deve poder criar conta local ao ser redirecionado para uma **tela de cadastro dedicada** (não é modal na própria tela de login), com campos nome, e-mail, senha e confirmar senha | 🟢 |
-| RF-04 | Sistema deve exibir, na tela de cadastro, um **texto descritivo da política de senha** (mín. 8 / máx. 15 caracteres, 1 maiúscula, 1 minúscula, 1 número, 1 caractere especial) — sem gerador automático de senha | 🔴 |
+| RF-04 | Sistema deve exibir, na tela de cadastro, um **texto descritivo da política de senha** (mín. 8 / máx. 15 caracteres, 1 maiúscula, 1 minúscula, 1 número, 1 caractere especial) — sem gerador automático de senha | 🟢 |
 | RF-04a | Usuário com conta Google clicando em "FORGOT?" deve ser informado de que a conta usa login do Google, sem tentar redefinição de senha | 🔴 |
 | RF-04b | Usuário com conta local clicando em "FORGOT?" deve ser redirecionado à tela `forgot-password` (pede apenas o e-mail) | 🟡 |
 | RF-04c | Ao submeter o e-mail em `forgot-password`, o sistema exibe **sempre a mesma mensagem genérica** de sucesso ("se o e-mail existir, você receberá instruções"), independente de o e-mail existir ou de qual provedor usa — evita enumeração de usuários | 🟢 |
@@ -38,10 +40,10 @@ Isso significa que a tabela `User` precisa suportar os dois formatos ao mesmo te
 | RF-04f | Após troca de senha bem-sucedida, sistema deve invalidar o token usado e revogar sessões ativas anteriores do usuário, redirecionando para `login` com mensagem de sucesso | 🟡 |
 | RF-04g | Se o token for inexistente, expirado ou já utilizado, tela `reset-password` deve exibir erro genérico ("link inválido ou expirado") com opção de solicitar um novo e-mail — sem detalhar qual dos três motivos ocorreu | 🟡 |
 | RF-05 | Sistema deve criar/atualizar o registro do usuário no Postgres (tabela `User`) no primeiro login bem-sucedido, vinculado ao `firebaseUid` | 🔴 |
-| RF-06 | Sistema deve emitir uma sessão própria do backend (cookie httpOnly) após validar o ID Token do Firebase, para as demais rotas da aplicação não dependerem do SDK client do Firebase a cada request | 🟡 |
+| RF-06 | ⚠️ **Bloqueador de segurança.** Sistema deve emitir uma sessão própria do backend (cookie httpOnly) após validar o ID Token do Firebase, para as demais rotas da aplicação não dependerem do SDK client do Firebase a cada request. Enquanto este item não fechar, qualquer rota protegida corre o risco de confiar em estado do Firebase client manipulável pelo usuário em vez de identidade validada no servidor (falha #2 da auditoria "vibe coding" — autorização decidida no frontend) — não liberar rota autenticada em produção sem RF-06 concluído | 🟡 |
 | RF-07 | Link "Criar workspace" deve levar à tela de cadastro (e não ser apenas um `href="#"`) | 🟢 |
 | RF-08 | Link "FORGOT?" deve abrir a tela/modal de recuperação de senha | 🟢 |
-| RF-09 | Todos os textos visíveis ao usuário devem estar em português do Brasil (o `login.html` atual está 100% em inglês) | 🔴 |
+| RF-09 | Todos os textos visíveis ao usuário devem estar em português do Brasil (o `login.html` atual está 100% em inglês) | 🟢 |
 | RF-10 | Botão de login com Google deve exibir estado de carregamento e desabilitar múltiplos cliques durante o processo de popup/redirect | 🔴 |
 
 ## 3. Regras de Negócio (RN)
@@ -50,7 +52,7 @@ Isso significa que a tabela `User` precisa suportar os dois formatos ao mesmo te
 | ---- | ------- | ------ |
 | RN-AUTH-01 | A tabela `User` suporta dois provedores: `firebaseUid` (nulo para usuários locais) e `passwordHash` (nulo para usuários Google). Usuário Google **nunca** tem `passwordHash`; usuário local **nunca** tem `firebaseUid` | 🟢 |
 | RN-AUTH-02 | O vínculo Firebase↔Postgres é feito por `firebaseUid` único, nunca por e-mail (e-mail pode mudar; UID não). O vínculo do cadastro local é feito por `email` único | 🟢 |
-| RN-AUTH-03 | Se um e-mail já cadastrado localmente tentar entrar via Google (ou vice-versa), o backend deve rejeitar/orientar o conflito explicitamente — **não** deve fazer merge automático silencioso das duas identidades | 🔴 |
+| RN-AUTH-03 | ⚠️ **Bloqueador de segurança.** Se um e-mail já cadastrado localmente tentar entrar via Google (ou vice-versa), o backend deve rejeitar/orientar o conflito explicitamente — **não** deve fazer merge automático silencioso das duas identidades. Merge automático sem checagem é vetor de *account takeover*: alguém que descubra o e-mail de uma conta local pode tentar assumi-la via Google. Não liberar login Google em produção sem esta regra implementada | 🔴 |
 | RN-AUTH-04 | Senha de cadastro local: mínimo 8 e máximo 15 caracteres, com pelo menos 1 letra maiúscula, 1 minúscula, 1 número e 1 caractere especial — validado com Zod no front (React Hook Form) **e** novamente com Zod no backend antes de gerar o hash (nunca confiar só na validação client-side) | 🟡 |
 | RN-AUTH-05 | Senha de cadastro local é armazenada com hash bcrypt (nunca em texto plano, nunca reversível) | 🔴 |
 | RN-AUTH-06 | Recuperação de senha tem **duas rotas diferentes**, conforme o provedor do usuário: (a) conta Google → `sendPasswordResetEmail` do Firebase; (b) conta local → fluxo próprio no backend | 🔴 |
@@ -144,6 +146,20 @@ src/
     schema.prisma            # model User { firebaseUid @unique, email, name, ... }
                               # model PasswordResetToken { tokenHash @unique, userId, expiresAt, usedAt }
 ```
+
+## 6a. Segurança — Defesa em Profundidade e Auditoria "Vibe Coding" 🆕
+
+> Seção adicionada após auditoria de segurança contra as 5 falhas mais comuns em código gerado
+> por IA (RLS/Security Rules ausentes, autorização no frontend, IDOR, segredos expostos, input
+> sem validação/sanitização).
+
+| Regra | Descrição | Status |
+| --- | --- | --- |
+| RN-SEC-01 🆕 | O projeto não usa Firestore/Realtime Database (ver nota da Seção 1), então não há Security Rules do Firebase para ativar. Toda a autorização depende de RF-06 (validação server-side do ID Token) e RN-AUTH-07/-09 estarem corretamente implementadas em **100% das rotas protegidas** — não existe segunda camada de defesa no banco. Decisão de arquitetura válida hoje, mas deve ser revisitada caso o projeto passe a usar Firestore para algum dado | 🟢 (documentado) |
+| RN-SEC-02 🆕 | Toda tela futura que exponha recursos por ID (ex.: `taskId`, `sessionId` nas telas de Tasks/Dashboard do projeto) deve implementar checagem de posse (`resource.userId === req.user.id`) antes de responder — mesmo padrão de RN-ORDER-06 do Casa do Hambúrguer. Fora do escopo desta tela de Login, mas registrado aqui como regra a propagar para os próximos documentos de regra de negócio do FocusFlow | 🔵 |
+| RN-SEC-03 🆕 | O CI deve rodar um scanner de segredos (Gitleaks ou TruffleHog) contra o histórico completo do repositório antes de qualquer deploy — cobre o caso de uma chave (ex. service account do Firebase) ter sido commitada por engano e depois removida, mas permanecer no histórico do Git | 🔵 |
+
+---
 
 ## 7. Sugestões de funcionalidades extras (avaliar, não implementado)
 

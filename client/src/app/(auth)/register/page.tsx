@@ -1,7 +1,7 @@
 "use client";
-import { registerSchema } from "../../../schemas/authSchemas";
 import Link from "next/link";
 import { useState } from "react";
+import { registerSchema } from "../../../schemas/authSchemas";
 
 export default function RegisterPage() {
   const [displayName, setDisplayName] = useState("");
@@ -51,10 +51,10 @@ export default function RegisterPage() {
         <div className="bg-surface-container border border-outline-variant p-8 md:p-10 rounded-xl shadow-2xl transition-all duration-300">
           <div className="mb-10">
             <h2 className="font-headline-lg text-headline-lg text-on-surface mb-2">
-              Create account
+              Crie uma conta
             </h2>
             <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Start your deep work journey. Join FocusFlow today.
+              Começe sua jornada. Junte-se ao FocusFlow
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -63,7 +63,7 @@ export default function RegisterPage() {
                 className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                 htmlFor="displayName"
               >
-                DISPLAY NAME
+                NOME
               </label>
               <div className="relative flex items-center input-focus-effect rounded-lg">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[20px]">
@@ -73,7 +73,7 @@ export default function RegisterPage() {
                   className="w-full bg-surface-container-low border border-outline-variant rounded-lg py-3 pl-11 pr-4 font-body-sm text-body-sm text-on-surface placeholder:text-outline/50 focus:border-primary focus:ring-0 outline-none transition-all"
                   id="displayName"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Seu nome"
                   required
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
@@ -87,7 +87,7 @@ export default function RegisterPage() {
                 className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                 htmlFor="email"
               >
-                EMAIL ADDRESS
+                EMAIL
               </label>
               <div className="relative flex items-center input-focus-effect rounded-lg">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[20px]">
@@ -97,7 +97,7 @@ export default function RegisterPage() {
                   className="w-full bg-surface-container-low border border-outline-variant rounded-lg py-3 pl-11 pr-4 font-body-sm text-body-sm text-on-surface placeholder:text-outline/50 focus:border-primary focus:ring-0 outline-none transition-all"
                   id="email"
                   type="email"
-                  placeholder="name@company.com"
+                  placeholder="Seu email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -111,7 +111,7 @@ export default function RegisterPage() {
                 className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                 htmlFor="password"
               >
-                PASSWORD
+                SENHA
               </label>
               <div className="relative flex items-center input-focus-effect rounded-lg">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[20px]">
@@ -135,7 +135,7 @@ export default function RegisterPage() {
                 className="font-label-caps text-label-caps text-on-surface-variant group-focus-within:text-primary transition-colors"
                 htmlFor="confirmPassword"
               >
-                CONFIRM PASSWORD
+                CONFIRME SUA SENHA
               </label>
               <div className="relative flex items-center input-focus-effect rounded-lg">
                 <span className="material-symbols-outlined absolute left-3 text-outline text-[20px]">
@@ -166,7 +166,7 @@ export default function RegisterPage() {
               type="submit"
               className="w-full bg-primary hover:bg-primary-container text-on-primary font-headline-md text-headline-md py-3.5 rounded-lg transition-all duration-200 transform active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              Create account
+              Criar conta
               <span className="material-symbols-outlined text-[18px]">
                 arrow_forward
               </span>
@@ -178,7 +178,7 @@ export default function RegisterPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-surface-container px-4 text-outline font-label-caps text-label-caps">
-                Or continue with
+                Ou continue com
               </span>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function RegisterPage() {
         </div>
         <footer className="mt-8 text-center space-y-4">
           <p className="font-body-sm text-body-sm text-on-surface-variant">
-            Already have an account?{" "}
+            Já tem uma conta?{" "}
             <Link
               href="/login"
               className="text-primary font-semibold hover:underline decoration-2 underline-offset-4"
@@ -223,13 +223,13 @@ export default function RegisterPage() {
               href="#"
               className="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors"
             >
-              Privacy Policy
+              Política de privacidade
             </a>
             <a
               href="#"
               className="font-label-caps text-label-caps text-outline hover:text-on-surface transition-colors"
             >
-              Terms of Service
+              Termos de serviço
             </a>
           </div>
         </footer>
