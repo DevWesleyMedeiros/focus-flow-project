@@ -12,13 +12,10 @@ const mailService = (() => {
   const isEnabled = !!process.env['RESEND_API_KEY'] && !!process.env['MAIL_FROM'];
 
   async function sendEmail(_mailData: MailData): Promise<boolean> {
-    // Se as credenciais não existirem, apenas loga e retorna sucesso (não quebra a aplicação)
+    // Sem credenciais não há entrega real; nunca registre destinatário ou link/token de reset.
     if (!isEnabled) {
-      console.log(
-        "[mailService] E-mail não enviado (serviço desativado por falta de credenciais):",
-        _mailData,
-      );
-      return true;
+      console.warn("[mailService] Serviço de e-mail desativado por falta de credenciais.");
+      return false;
     }
 
     // Implementação real com Resend (se as credenciais existirem)

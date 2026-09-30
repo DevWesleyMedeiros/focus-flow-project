@@ -35,6 +35,7 @@ export async function registerController(req: Request, res: Response) {
         email: validated.email,
         displayName: validated.displayName,
         passwordHash,
+        authProvider: "LOCAL",
         // firebaseUid fica null para usuários locais - RN-AUTH-01/RN-AUTH-02
       },
       select: {

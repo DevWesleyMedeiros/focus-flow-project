@@ -8,8 +8,7 @@ import {
 import { mailService } from "../../services/mailService";
 import {
     generateResetToken,
-    markTokenAsUsed,
-    validateResetToken,
+    getResetTokenHash,
 } from "../../services/resetTokenService";
 
 const SALT_ROUNDS = 10;
@@ -18,23 +17,17 @@ export async function resetPasswordController(req: Request, res: Response) {
   try {
     const validated = resetPasswordSchema.parse(req.body);
 
-    const tokenRecord = await validateResetToken(validated.token);
-    if (!tokenRecord) {
-      return res.status(400).json({
-        error:
-          "Link inválido ou expirado. Solicite um novo link de recuperação.",
-      });
-    }
-
-    await markTokenAsUsed(tokenRecord.id);
-
-    const newPasswordHash = await bcrypt.hash(validated.password, SALT_ROUNDS);
-    await prisma.user.update({
-      where: { id: tokenRecord.userId },
-      data: { passwordHash: newPasswordHash },
+    const newPasswordHash = await bcrypt.hash(validated.newPassword, SALT_ROUNDS);
+    const consumed = await prisma.$transaction(async (tx) => {
+      const record = await tx.passwordTokenReset.findFirst({ where: { tokenHash: getResetTokenHash(validated.token), expiresAt: { gt: new Date() }, usedAt: null }, include: { user: true } });
+      if (!record || record.user.authProvider !== "LOCAL") return false;
+      const updated = await tx.passwordTokenReset.updateMany({ where: { id: record.id, usedAt: null }, data: { usedAt: new Date() } });
+      if (updated.count !== 1) return false;
+      await tx.user.update({ where: { id: record.userId }, data: { passwordHash: newPasswordHash } });
+      await tx.session.updateMany({ where: { userId: record.userId, revokedAt: null }, data: { revokedAt: new Date() } });
+      return true;
     });
-
-    // Revoga sessões anteriores: comportamento minimamente implementado
+    if (!consumed) return res.status(400).json({ error: "Link inválido ou expirado" });
     return res.status(200).json({
       success: true,
       message: "Senha redefinida com sucesso. Faça login com sua nova senha.",
@@ -68,13 +61,13 @@ export async function forgotPasswordController(req: Request, res: Response) {
     return res.status(200).json({
       success: true,
       message:
-        "Se o e-mail informado existir e estiver vinculado a uma conta local, você receberá um link para redefinir sua senha em alguns instantes.",
+        "Se o e-mail informado estiver cadastrado, você receberá instruções para redefinir sua senha.",
     });
   } catch (_err: any) {
     return res.status(200).json({
       success: true,
       message:
-        "Se o e-mail informado existir e estiver vinculado a uma conta local, você receberá um link para redefinir sua senha em alguns instantes.",
+        "Se o e-mail informado estiver cadastrado, você receberá instruções para redefinir sua senha.",
     });
   }
 }

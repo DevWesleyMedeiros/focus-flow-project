@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { loginService } from "../../services/auth/loginService";
 import { loginSchema } from "../../schemas/authSchemas";
 import { createBackendSession } from "../../services/authService";
+import { sessionCookieOptions } from "../../config/sessionCookie";
 
 const SESSION_COOKIE_NAME = "backend_session";
 
@@ -12,14 +13,7 @@ export async function loginController(req: Request, res: Response) {
 
     const { token, maxAge } = await createBackendSession(result.user.id);
 
-    const secureFlag = process.env["NODE_ENV"] === "production";
-    res.cookie(SESSION_COOKIE_NAME, token, {
-      httpOnly: true,
-      secure: secureFlag,
-      sameSite: "lax",
-      maxAge,
-      path: "/",
-    });
+    res.cookie(SESSION_COOKIE_NAME, token, { ...sessionCookieOptions, maxAge });
 
     return res.status(200).json(result);
   } catch (error: any) {

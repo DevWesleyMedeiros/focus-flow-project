@@ -32,7 +32,7 @@ export const forgotPasswordSchema = z.object({
 export const resetPasswordSchema = z
   .object({
     token: z.string().min(1, "Token é obrigatório"),
-    password: z
+    newPassword: z
       .string()
       .regex(
         passwordRegex,
@@ -40,12 +40,11 @@ export const resetPasswordSchema = z
       ),
     confirmPassword: z.string(),
   })
-  .refine((data) => data.password === data.confirmPassword, {
+  .refine((data) => data.newPassword === data.confirmPassword, {
     message: "As senhas não coincidem",
     path: ["confirmPassword"],
   });
 
 export const sessionSchema = z.object({
   idToken: z.string().min(1, "ID Token é obrigatório"),
-  csrfToken: z.string().min(1, "CSRF Token é obrigatório"),
 });

@@ -126,6 +126,7 @@ exports.Prisma.UserScalarFieldEnum = {
   displayName: 'displayName',
   passwordHash: 'passwordHash',
   firebaseUid: 'firebaseUid',
+  authProvider: 'authProvider',
   dailyGoal: 'dailyGoal',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -144,9 +145,19 @@ exports.Prisma.AvatarScalarFieldEnum = {
 exports.Prisma.PasswordTokenResetScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  token: 'token',
+  tokenHash: 'tokenHash',
   expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  revokedAt: 'revokedAt'
 };
 
 exports.Prisma.FocusSessionScalarFieldEnum = {
@@ -198,6 +209,11 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.AuthProvider = exports.$Enums.AuthProvider = {
+  LOCAL: 'LOCAL',
+  GOOGLE: 'GOOGLE'
+};
+
 exports.Priority = exports.$Enums.Priority = {
   LOW: 'LOW',
   MEDIUM: 'MEDIUM',
@@ -208,6 +224,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Avatar: 'Avatar',
   PasswordTokenReset: 'PasswordTokenReset',
+  Session: 'Session',
   FocusSession: 'FocusSession',
   Task: 'Task',
   Category: 'Category'

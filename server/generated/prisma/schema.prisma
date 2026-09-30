@@ -13,6 +13,7 @@ model User {
   displayName        String
   passwordHash       String?
   firebaseUid        String?              @unique
+  authProvider       AuthProvider
   dailyGoal          Int                  @default(8)
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
@@ -20,6 +21,7 @@ model User {
   categories         Category[]
   focusSessions      FocusSession[]
   passwordTokenReset PasswordTokenReset[]
+  sessions           Session[]
   tasks              Task[]
 
   @@index([createdAt])
@@ -37,12 +39,25 @@ model Avatar {
 }
 
 model PasswordTokenReset {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   userId    String
-  token     String   @unique
+  tokenHash String    @unique
   expiresAt DateTime
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model Session {
+  id        String    @id @default(uuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, expiresAt])
 }
@@ -100,4 +115,9 @@ enum Priority {
   LOW
   MEDIUM
   HIGH
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
 }

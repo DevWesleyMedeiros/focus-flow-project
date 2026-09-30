@@ -1,7 +1,6 @@
 // TODO: Inicializar Firebase Admin SDK - configurar credenciais do service account
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { getFirestore } from "firebase-admin/firestore";
 
 const rawServiceAccount = process.env["FIREBASE_SERVICE_ACCOUNT_KEY"];
 
@@ -39,16 +38,4 @@ const adminAuth = (() => {
   } as unknown as ReturnType<typeof getAuth>;
 })();
 
-const adminDb = (() => {
-  if (rawServiceAccount) {
-    return getFirestore();
-  }
-
-  if (getApps().length) {
-    return getFirestore();
-  }
-
-  return undefined;
-})();
-
-export { adminAuth, adminDb, getApps };
+export { adminAuth, getApps };

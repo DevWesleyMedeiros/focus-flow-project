@@ -1,37 +1,30 @@
-import { SignJWT, jwtVerify } from "jose";
-import { adminAuth } from "../config/firebaseAdmin";
+import crypto from "node:crypto";
 import { prisma } from "../db";
 
-const FIVE_DAYS_MS = 60 * 60 * 24 * 5 * 1000;
-const JWT_SECRET = process.env["JWT_SECRET"] || "dev-secret-session-key";
-
-function getSessionSecret() {
-  return new TextEncoder().encode(JWT_SECRET);
-}
-
-export async function createFirebaseSession(idToken: string) {
-  const sessionCookie = await adminAuth.createSessionCookie(idToken, {
-    expiresIn: FIVE_DAYS_MS,
-  });
-  return { sessionCookie, maxAge: FIVE_DAYS_MS };
-}
+export const SESSION_COOKIE_NAME = "backend_session";
+export const SESSION_MAX_AGE_MS = 5 * 24 * 60 * 60 * 1000;
+const hashToken = (token: string) => crypto.createHash("sha256").update(token).digest("hex");
 
 export async function createBackendSession(userId: string) {
-  const token = await new SignJWT({ userId })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setExpirationTime("5d")
-    .sign(getSessionSecret());
-
-  return { token, maxAge: FIVE_DAYS_MS };
+  const token = crypto.randomBytes(32).toString("base64url");
+  const maxAge = SESSION_MAX_AGE_MS;
+  await prisma.session.create({ data: { userId, tokenHash: hashToken(token), expiresAt: new Date(Date.now() + maxAge) } });
+  return { token, maxAge };
 }
 
-export async function verifyBackendSession(token: string) {
-  const verified = await jwtVerify(token, getSessionSecret());
-  return verified.payload as { userId: string };
+export async function getBackendSession(token: string) {
+  return prisma.session.findFirst({ where: { tokenHash: hashToken(token), revokedAt: null, expiresAt: { gt: new Date() } }, include: { user: true } });
 }
 
-export async function upsertFirebaseUser(tokenPayload: {
+export async function revokeBackendSession(token: string) {
+  await prisma.session.updateMany({ where: { tokenHash: hashToken(token), revokedAt: null }, data: { revokedAt: new Date() } });
+}
+
+export async function revokeUserSessions(userId: string) {
+  await prisma.session.updateMany({ where: { userId, revokedAt: null }, data: { revokedAt: new Date() } });
+}
+
+export async function resolveFirebaseUser(tokenPayload: {
   uid: string;
   email?: string;
   name?: string;
@@ -44,32 +37,16 @@ export async function upsertFirebaseUser(tokenPayload: {
 
   const userEmail = email;
 
-  const existingByEmail = await prisma.user.findUnique({
-    where: { email: userEmail },
-  });
-
-  if (existingByEmail && !existingByEmail.firebaseUid) {
-    throw new Error(
-      "Este e-mail já está cadastrado com uma conta local. Use a conta local para entrar.",
-    );
-  }
+  const existingByUid = await prisma.user.findUnique({ where: { firebaseUid: uid } });
+  const existingByEmail = await prisma.user.findUnique({ where: { email: userEmail } });
+  if (existingByUid && existingByUid.authProvider !== "GOOGLE") throw new Error("Conflito de identidade da conta Google.");
+  if (existingByEmail && existingByEmail.authProvider !== "GOOGLE") throw new Error("Este e-mail já está cadastrado com uma conta local. Use o login com e-mail e senha.");
+  if (existingByUid && existingByEmail && existingByUid.id !== existingByEmail.id) throw new Error("Conflito de identidade da conta Google.");
 
   const safeName = typeof name === "string" ? name.trim() : "";
   const displayName =
     safeName.length > 0 ? safeName : userEmail.split?.("@")?.[0] || "";
 
-  const user = await prisma.user.upsert({
-    where: { firebaseUid: uid },
-    update: {
-      email: userEmail,
-      displayName,
-    },
-    create: {
-      firebaseUid: uid,
-      email: userEmail,
-      displayName,
-    },
-  });
-
-  return user;
+  if (existingByUid) return prisma.user.update({ where: { id: existingByUid.id }, data: { email: userEmail, displayName } });
+  return prisma.user.create({ data: { firebaseUid: uid, email: userEmail, displayName, authProvider: "GOOGLE" } });
 }

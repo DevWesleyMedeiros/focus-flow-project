@@ -6,5 +6,5 @@ export async function meController(req: Request, res: Response) {
     return res.status(401).json({ error: "Usuário não autenticado" });
   }
 
-  return res.status(200).json({ user });
+  return res.status(200).json({ user: { id: user.id, email: user.email, displayName: user.displayName, authProvider: user.authProvider, dailyGoal: user.dailyGoal, createdAt: user.createdAt } });
 }
