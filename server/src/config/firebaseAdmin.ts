@@ -1,4 +1,3 @@
-// TODO: Inicializar Firebase Admin SDK - configurar credenciais do service account
 import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 

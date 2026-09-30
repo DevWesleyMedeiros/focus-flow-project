@@ -8,9 +8,14 @@ const connectionString = `${process.env["DATABASE_URL"]}`;
 
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
+
 export { prisma };
 
 // função que cria uma conexão com meu BD
+/**
+ * @description Função que conecta meu cliente prisma com meu backend
+ * @returns {Promise<void>}
+ */
 export async function connection() {
   try {
     await prisma.$connect();

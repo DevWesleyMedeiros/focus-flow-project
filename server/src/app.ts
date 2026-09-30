@@ -2,7 +2,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
+import { connection } from "./db";
 import { authRouter } from "./routes/authRoutes";
+
+void connection();
 
 const app = express();
 app.disabled("x-powered-by");
