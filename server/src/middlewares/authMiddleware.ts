@@ -10,12 +10,14 @@ export async function authMiddleware(
   const backendCookie = req.cookies?.[SESSION_COOKIE_NAME];
 
   try {
-    if (!backendCookie) return res.status(401).json({ error: "Não autenticado" });
+    if (!backendCookie)
+      return res.status(401).json({ error: "Não autenticado" });
     const session = await getBackendSession(backendCookie);
-    if (!session) return res.status(401).json({ error: "Sessão inválida ou expirada" });
+    if (!session)
+      return res.status(401).json({ error: "Sessão inválida ou expirada" });
     (req as any).user = session.user;
     return next();
-  } catch (error) {
+  } catch {
     return res.status(401).json({ error: "Sessão inválida ou expirada" });
   }
 }

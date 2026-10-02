@@ -1,4 +1,3 @@
-// TODO: Implementar hook de autenticação - ver regras em docs/architecture/REGRAS_DE_NEGOCIO_LOGIN.md
 "use client";
 
 export function useAuth() {

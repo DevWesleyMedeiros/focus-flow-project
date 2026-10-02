@@ -6,5 +6,91 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../../../schemas/authSchemas";
 import { authService } from "../../../lib/api/authService";
-type Values = { displayName: string; email: string; password: string; confirmPassword: string };
-export default function RegisterPage() { const router = useRouter(); const [error, setError] = useState(""); const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Values>({ resolver: zodResolver(registerSchema) }); const submit = async (data: Values) => { try { setError(""); await authService.register(data); router.push("/login"); } catch (e: any) { setError(e.response?.data?.error ?? "Não foi possível criar a conta."); } }; return <main className="bg-background min-h-screen flex items-center justify-center"><section className="w-full max-w-[420px] px-6"><div className="bg-surface-container p-8 rounded-xl"><h1 className="text-primary text-3xl mb-6">FocusFlow</h1><h2 className="text-xl mb-2">Crie uma conta</h2><p className="mb-5">Comece sua jornada. Junte-se ao FocusFlow.</p><form noValidate onSubmit={handleSubmit(submit)} className="space-y-4">{([['displayName','Nome','text'],['email','E-mail','email'],['password','Senha','password'],['confirmPassword','Confirme sua senha','password']] as const).map(([name,label,type]) => <div key={name}><label htmlFor={name}>{label}</label><input id={name} type={type} disabled={isSubmitting} aria-invalid={!!errors[name]} aria-describedby={errors[name] ? `${name}-error` : undefined} className="w-full p-3 rounded bg-surface-container-low border" {...register(name)} />{errors[name] && <p id={`${name}-error`} className="text-error">{errors[name]?.message}</p>}</div>)}<p className="text-sm">Senha: 8–15 caracteres, com maiúscula, minúscula, número e caractere especial.</p>{error && <p aria-live="polite" className="text-error">{error}</p>}<button disabled={isSubmitting} className="w-full bg-primary p-3 rounded">{isSubmitting ? "Criando..." : "Criar conta"}</button></form><p className="mt-6 text-center">Já possui conta? <Link href="/login" className="text-primary">Entrar</Link></p></div></section></main>; }
+type Values = {
+  displayName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+export default function RegisterPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<Values>({ resolver: zodResolver(registerSchema) });
+  const submit = async (data: Values) => {
+    try {
+      setError("");
+      await authService.register(data);
+      router.push("/login");
+    } catch (e: any) {
+      setError(e.response?.data?.error ?? "Não foi possível criar a conta.");
+    }
+  };
+  return (
+    <main className="bg-background min-h-screen flex items-center justify-center">
+      <section className="w-full max-w-[420px] px-6">
+        <div className="bg-surface-container p-8 rounded-xl">
+          <h1 className="text-primary text-3xl mb-6">FocusFlow</h1>
+          <h2 className="text-xl mb-2">Crie uma conta</h2>
+          <p className="mb-5">Comece sua jornada. Junte-se ao FocusFlow.</p>
+          <form
+            noValidate
+            onSubmit={handleSubmit(submit)}
+            className="space-y-4"
+          >
+            {(
+              [
+                ["displayName", "Nome", "text"],
+                ["email", "E-mail", "email"],
+                ["password", "Senha", "password"],
+                ["confirmPassword", "Confirme sua senha", "password"],
+              ] as const
+            ).map(([name, label, type]) => (
+              <div key={name}>
+                <label htmlFor={name}>{label}</label>
+                <input
+                  id={name}
+                  type={type}
+                  disabled={isSubmitting}
+                  aria-invalid={!!errors[name]}
+                  aria-describedby={errors[name] ? `${name}-error` : undefined}
+                  className="w-full p-3 rounded bg-surface-container-low border"
+                  {...register(name)}
+                />
+                {errors[name] && (
+                  <p id={`${name}-error`} className="text-error">
+                    {errors[name]?.message}
+                  </p>
+                )}
+              </div>
+            ))}
+            <p className="text-sm">
+              Senha: 8–15 caracteres, com maiúscula, minúscula, número e
+              caractere especial.
+            </p>
+            {error && (
+              <p aria-live="polite" className="text-error">
+                {error}
+              </p>
+            )}
+            <button
+              disabled={isSubmitting}
+              className="w-full bg-primary p-3 rounded"
+            >
+              {isSubmitting ? "Criando..." : "Criar conta"}
+            </button>
+          </form>
+          <p className="mt-6 text-center">
+            Já possui conta?{" "}
+            <Link href="/login" className="text-primary">
+              Entrar
+            </Link>
+          </p>
+        </div>
+      </section>
+    </main>
+  );
+}

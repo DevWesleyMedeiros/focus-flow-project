@@ -28,10 +28,10 @@ const adminAuth = (() => {
   }
 
   return {
-    verifyIdToken: async () => {
+    verifyIdToken: () => {
       throw new Error("Firebase Admin not initialized");
     },
-    verifySessionCookie: async () => {
+    verifySessionCookie: () => {
       throw new Error("Firebase Admin not initialized");
     },
   } as unknown as ReturnType<typeof getAuth>;

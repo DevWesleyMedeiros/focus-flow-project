@@ -1,4 +1,3 @@
-// TODO: Serviço de upload de avatar - configurar credenciais Cloudinary
 import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
 import { Readable } from "node:stream";

@@ -5,6 +5,7 @@ import { registerSchema } from "../../schemas/authSchemas";
 
 const SALT_ROUNDS = 10;
 
+// controller que de registro
 export async function registerController(req: Request, res: Response) {
   try {
     // Valida dados com Zod (RN-AUTH-04 - validação backend)
@@ -48,9 +49,14 @@ export async function registerController(req: Request, res: Response) {
 
     return res.status(201).json({ success: true, user: newUser });
   } catch (error: any) {
+    console.error("❌ ERRO no registerController:", error);
     if (error.name === "ZodError") {
+      console.error("⚠️ ZodError - Dados inválidos:", error.issues);
       return res.status(400).json({ error: error.issues[0].message });
     }
-    return res.status(500).json({ error: "Erro interno ao criar conta" });
+    console.error("🚨 Erro desconhecido:", error.message, error.stack);
+    return res
+      .status(500)
+      .json({ error: "Erro interno ao criar conta", details: error.message });
   }
 }

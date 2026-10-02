@@ -1,4 +1,3 @@
-// TODO: Implementar tipos TypeScript para usuário
 export type User = {
   id: string;
   email: string;
